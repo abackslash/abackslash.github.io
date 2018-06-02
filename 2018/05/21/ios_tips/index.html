@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="UIView动画 使用[UIView animateWithDuration:…]执行动画改变view期间不宜重新加载view中的数据，尤其是有滑动操作的时候。（比如UITableView、UICollectionView等，最好在动画执行之前重载数据。）  123456789101112- (void)scrollViewDidScroll:(UIScrollView *)scrollView&amp;">
+<meta name="keywords" content="iOS,Android,Python,React-Native,Java,PostgreSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 笔记">
+<meta property="og:url" content="http://crazystone.com/2018/05/21/ios_tips/index.html">
+<meta property="og:site_name" content="疯狂的石头">
+<meta property="og:description" content="UIView动画 使用[UIView animateWithDuration:…]执行动画改变view期间不宜重新加载view中的数据，尤其是有滑动操作的时候。（比如UITableView、UICollectionView等，最好在动画执行之前重载数据。）  123456789101112- (void)scrollViewDidScroll:(UIScrollView *)scrollView&amp;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-05-20T17:17:54.814Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 笔记">
+<meta name="twitter:description" content="UIView动画 使用[UIView animateWithDuration:…]执行动画改变view期间不宜重新加载view中的数据，尤其是有滑动操作的时候。（比如UITableView、UICollectionView等，最好在动画执行之前重载数据。）  123456789101112- (void)scrollViewDidScroll:(UIScrollView *)scrollView&amp;">
+
+
+
+
+
+
+  <link rel="canonical" href="http://crazystone.com/2018/05/21/ios_tips/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>iOS 笔记 | 疯狂的石头</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">疯狂的石头</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://crazystone.com/2018/05/21/ios_tips/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Crazy Stone">
+      <meta itemprop="description" content="step by step...">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="疯狂的石头">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS 笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-21 00:34:18 / 修改时间：01:17:54" itemprop="dateCreated datePublished" datetime="2018-05-21T00:34:18+08:00">2018-05-21</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="UIView动画"><a href="#UIView动画" class="headerlink" title="UIView动画"></a>UIView动画</h2><blockquote>
+<p>使用[UIView animateWithDuration:…]执行动画改变view期间不宜重新加载view中的数据，尤其是有滑动操作的时候。（比如UITableView、UICollectionView等，最好在动画执行之前重载数据。）</p>
+</blockquote>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)scrollViewDidScroll:(<span class="built_in">UIScrollView</span> *)scrollView</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//最好在这里执行reloadData</span></span><br><span class="line">    [<span class="keyword">self</span>.tableView reloadData];</span><br><span class="line">    [<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.4</span> animations:^&#123;</span><br><span class="line">        <span class="keyword">self</span>.tableView.contentOffset = <span class="built_in">CGPointZero</span>;</span><br><span class="line">        <span class="keyword">self</span>.tableView.frame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">100</span>, <span class="number">414</span>, <span class="number">500</span>);</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    <span class="comment">//在这里执行reloadData容易crash</span></span><br><span class="line">    [<span class="keyword">self</span>.tableView reloadData];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="runtime理解"><a href="#runtime理解" class="headerlink" title="runtime理解"></a>runtime理解</h2><blockquote>
+<p>runtime是一套可以进行一些非常底层的用OC无法实现的操作的纯C语言的API</p>
+</blockquote>
+<h3 id="Objective-C类由一个指向objc-class结构体的指针来表示"><a href="#Objective-C类由一个指向objc-class结构体的指针来表示" class="headerlink" title="Objective-C类由一个指向objc_class结构体的指针来表示:"></a>Objective-C类由一个指向objc_class结构体的指针来表示:</h3><figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//An opaque type that represents an Objective-C class.</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_class *Class;</span><br></pre></td></tr></table></figure>
+<h3 id="objc-runtime-h中objc-class结构体的定义如下："><a href="#objc-runtime-h中objc-class结构体的定义如下：" class="headerlink" title="objc/runtime.h中objc_class结构体的定义如下："></a>objc/runtime.h中objc_class结构体的定义如下：</h3><figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> objc_class &#123;</span><br><span class="line">    Class isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line"></span><br><span class="line"><span class="meta">#if !__OBJC2__</span></span><br><span class="line">    Class super_class                       OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name                        OBJC2_UNAVAILABLE;<span class="comment">//类名</span></span><br><span class="line">    <span class="keyword">long</span> version                            OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">long</span> info                               OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">long</span> instance_size                      OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">struct</span> objc_ivar_list *ivars            OBJC2_UNAVAILABLE;<span class="comment">//该类的成员变量列表</span></span><br><span class="line">    <span class="keyword">struct</span> objc_method_list **methodLists   OBJC2_UNAVAILABLE;</span><br><span class="line">    <span class="keyword">struct</span> objc_cache *cache                OBJC2_UNAVAILABLE;<span class="comment">//缓存最近使用的方法</span></span><br><span class="line">    <span class="keyword">struct</span> objc_protocol_list *protocols    OBJC2_UNAVAILABLE;</span><br><span class="line"><span class="meta">#endif</span></span><br><span class="line"></span><br><span class="line">&#125; OBJC2_UNAVAILABLE;</span><br></pre></td></tr></table></figure>
+<h3 id="一个类的实例由结构体objc-object来表示"><a href="#一个类的实例由结构体objc-object来表示" class="headerlink" title="一个类的实例由结构体objc_object来表示:"></a>一个类的实例由结构体objc_object来表示:</h3><figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Represents an instance of a class.</span></span><br><span class="line"><span class="keyword">struct</span> objc_object &#123;</span><br><span class="line">    Class isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//A pointer to an instance of a class.</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_object *<span class="keyword">id</span>;</span><br></pre></td></tr></table></figure>
+<p>当我们向一个Objective-C对象发送消息时，运行时库会根据实例对象的isa指针找到这个实例对象所属的类。Runtime库会在类或其父类的方法列表中查询并执行与消息对应的selector指向的方法。</p>
+<h3 id="元类-MetaClass-是一个类对象的类"><a href="#元类-MetaClass-是一个类对象的类" class="headerlink" title="元类(MetaClass)是一个类对象的类"></a>元类(MetaClass)是一个类对象的类</h3><blockquote>
+<p>所有的类自身也是一个对象，我们可以向这个对象发送消息—调用类方法。</p>
+</blockquote>
+<p>meta-class也是一个类，也可以向它发送一个消息。Objective-C的设计者让所有的meta-class的isa指向基类的meta-class，以此作为它们的所属类。即，任何NSObject继承体系下的meta-class都使用NSObject的meta-class作为自己的所属类，而基类的meta-class的isa指针是指向它自己。这样就形成了一个完美的闭环。</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIView</span> *testView = [[<span class="built_in">UIView</span> alloc] init];</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%p"</span>, <span class="keyword">self</span>);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%s"</span>, class_getName([testView <span class="keyword">class</span>] ));</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"class is %s, superclass is %s"</span>, class_getName([<span class="keyword">self</span> <span class="keyword">class</span>]),</span><br><span class="line">      class_getName([<span class="keyword">self</span> superclass]));</span><br><span class="line"></span><br><span class="line">Class currentClass = [<span class="keyword">self</span> <span class="keyword">class</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Following the isa pointer %d times gives %p"</span>, i, currentClass);</span><br><span class="line">    currentClass = objc_getClass((__bridge <span class="keyword">void</span> *)currentClass);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>控制台输出：</strong></p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0x7fa410c1f990</span></span><br><span class="line"><span class="built_in">UIView</span></span><br><span class="line"><span class="keyword">class</span> is ViewController, superclass is <span class="built_in">UIViewController</span></span><br><span class="line">Following the isa pointer <span class="number">0</span> times gives <span class="number">0x101c4e6c0</span></span><br><span class="line">Following the isa pointer <span class="number">1</span> times gives <span class="number">0x0</span></span><br><span class="line">Following the isa pointer <span class="number">2</span> times gives <span class="number">0x0</span></span><br></pre></td></tr></table></figure>
+<h2 id="日历-NSCalendar"><a href="#日历-NSCalendar" class="headerlink" title="日历(NSCalendar)"></a>日历(NSCalendar)</h2><figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//日历</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">NSCalendarUnit</span> CalendarUnitYMD = <span class="built_in">NSCalendarUnitYear</span> | <span class="built_in">NSCalendarUnitMonth</span> | <span class="built_in">NSCalendarUnitDay</span>;</span><br><span class="line"><span class="built_in">NSCalendar</span> *calendar = [<span class="built_in">NSCalendar</span> currentCalendar];</span><br><span class="line"><span class="comment">//计算当月第一天</span></span><br><span class="line"><span class="built_in">NSDateComponents</span> *component = [calendar components:CalendarUnitYMD fromDate:[<span class="built_in">NSDate</span> date]];</span><br><span class="line">[component setTimeZone:[<span class="built_in">NSTimeZone</span> timeZoneWithName:<span class="string">@"UTC"</span>]];</span><br><span class="line">component.day = <span class="number">1</span>;</span><br><span class="line"><span class="built_in">NSDate</span> *currentDateFirstMonthDay = [calendar dateFromComponents:component];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, currentDateFirstMonthDay);</span><br><span class="line"></span><br><span class="line"><span class="comment">//计算当月最后一天</span></span><br><span class="line">component.month++;</span><br><span class="line">component.day = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, [calendar dateFromComponents:component]);</span><br><span class="line"></span><br><span class="line"><span class="comment">//计算相对日期</span></span><br><span class="line"><span class="built_in">NSDateComponents</span> *offsetComponent = [[<span class="built_in">NSDateComponents</span> alloc] init];</span><br><span class="line">offsetComponent.day = <span class="number">50</span>;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, [calendar dateByAddingComponents:offsetComponent toDate:currentDateFirstMonthDay options:<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">//日期对应的星期</span></span><br><span class="line"><span class="built_in">NSArray</span> *weekDaySymbols = [[[<span class="built_in">NSDateFormatter</span> alloc] init] shortWeekdaySymbols];</span><br><span class="line"><span class="built_in">NSDateComponents</span> *dateComponents = [calendar components:<span class="built_in">NSCalendarUnitWeekday</span> fromDate:currentDateFirstMonthDay];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, weekDaySymbols[dateComponents.weekday - <span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">//每个月的周数，iOS8以下使用NSWeekCalendarUnit代替NSCalendarUnitWeekOfMonth</span></span><br><span class="line"><span class="built_in">NSRange</span> rangeOfweeks = [calendar rangeOfUnit:<span class="built_in">NSCalendarUnitWeekOfMonth</span> inUnit:<span class="built_in">NSCalendarUnitMonth</span> forDate:currentDateFirstMonthDay];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, (<span class="keyword">long</span>)rangeOfweeks.length);</span><br><span class="line"></span><br><span class="line"><span class="comment">//计算日期间的天数，通过修改NSCalendarUnit可以间隔的月、年等等</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, (<span class="keyword">long</span>)[calendar components:<span class="built_in">NSCalendarUnitDay</span> fromDate:currentDateFirstMonthDay toDate:[<span class="built_in">NSDate</span> date] options:<span class="number">0</span>].day);</span><br></pre></td></tr></table></figure>
+<p><strong>控制台输出: </strong></p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2016</span><span class="number">-01</span><span class="number">-26</span> <span class="number">23</span>:<span class="number">11</span>:<span class="number">27.038</span> Test123[<span class="number">6502</span>:<span class="number">707948</span>] <span class="number">2016</span><span class="number">-01</span><span class="number">-01</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> +<span class="number">0000</span></span><br><span class="line"><span class="number">2016</span><span class="number">-01</span><span class="number">-26</span> <span class="number">23</span>:<span class="number">11</span>:<span class="number">27.038</span> Test123[<span class="number">6502</span>:<span class="number">707948</span>] <span class="number">2016</span><span class="number">-01</span><span class="number">-31</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> +<span class="number">0000</span></span><br><span class="line"><span class="number">2016</span><span class="number">-01</span><span class="number">-26</span> <span class="number">23</span>:<span class="number">11</span>:<span class="number">27.038</span> Test123[<span class="number">6502</span>:<span class="number">707948</span>] <span class="number">2016</span><span class="number">-02</span><span class="number">-20</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> +<span class="number">0000</span></span><br><span class="line"><span class="number">2016</span><span class="number">-01</span><span class="number">-26</span> <span class="number">23</span>:<span class="number">11</span>:<span class="number">27.039</span> Test123[<span class="number">6502</span>:<span class="number">707948</span>] 周五</span><br><span class="line"><span class="number">2016</span><span class="number">-01</span><span class="number">-26</span> <span class="number">23</span>:<span class="number">11</span>:<span class="number">27.039</span> Test123[<span class="number">6502</span>:<span class="number">707948</span>] <span class="number">6</span></span><br><span class="line"><span class="number">2016</span><span class="number">-01</span><span class="number">-26</span> <span class="number">23</span>:<span class="number">11</span>:<span class="number">27.040</span> Test123[<span class="number">6502</span>:<span class="number">707948</span>] <span class="number">25</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/21/正则表达式元字符/" rel="next" title="正则表达式元字符">
+                <i class="fa fa-chevron-left"></i> 正则表达式元字符
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/21/android_tips/" rel="prev" title="Android 笔记">
+                Android 笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Crazy Stone" />
+            
+              <p class="site-author-name" itemprop="name">Crazy Stone</p>
+              <p class="site-description motion-element" itemprop="description">step by step...</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#UIView动画"><span class="nav-number">1.</span> <span class="nav-text">UIView动画</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#runtime理解"><span class="nav-number">2.</span> <span class="nav-text">runtime理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Objective-C类由一个指向objc-class结构体的指针来表示"><span class="nav-number">2.1.</span> <span class="nav-text">Objective-C类由一个指向objc_class结构体的指针来表示:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#objc-runtime-h中objc-class结构体的定义如下："><span class="nav-number">2.2.</span> <span class="nav-text">objc/runtime.h中objc_class结构体的定义如下：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个类的实例由结构体objc-object来表示"><span class="nav-number">2.3.</span> <span class="nav-text">一个类的实例由结构体objc_object来表示:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元类-MetaClass-是一个类对象的类"><span class="nav-number">2.4.</span> <span class="nav-text">元类(MetaClass)是一个类对象的类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日历-NSCalendar"><span class="nav-number">3.</span> <span class="nav-text">日历(NSCalendar)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Crazy Stone</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
