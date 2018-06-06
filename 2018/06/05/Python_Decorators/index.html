@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Python decorators are a powerful tool to remove redundancy. Along with modularizing functionality into appropriate bite-sized methods, it makes even the most complex workflows into concise functional">
+<meta name="keywords" content="iOS,Android,Python,React-Native,Java,PostgreSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DRY(Don&#39;t Repeat Yourself) Principles through Python Decorators">
+<meta property="og:url" content="http://crazystone.com/2018/06/05/Python_Decorators/index.html">
+<meta property="og:site_name" content="疯狂的石头">
+<meta property="og:description" content="Python decorators are a powerful tool to remove redundancy. Along with modularizing functionality into appropriate bite-sized methods, it makes even the most complex workflows into concise functional">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-06-05T14:26:45.232Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DRY(Don&#39;t Repeat Yourself) Principles through Python Decorators">
+<meta name="twitter:description" content="Python decorators are a powerful tool to remove redundancy. Along with modularizing functionality into appropriate bite-sized methods, it makes even the most complex workflows into concise functional">
+
+
+
+
+
+
+  <link rel="canonical" href="http://crazystone.com/2018/06/05/Python_Decorators/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>DRY(Don't Repeat Yourself) Principles through Python Decorators | 疯狂的石头</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">疯狂的石头</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://crazystone.com/2018/06/05/Python_Decorators/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Crazy Stone">
+      <meta itemprop="description" content="step by step...">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="疯狂的石头">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DRY(Don't Repeat Yourself) Principles through Python Decorators
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-05 22:21:22 / 修改时间：22:26:45" itemprop="dateCreated datePublished" datetime="2018-06-05T22:21:22+08:00">2018-06-05</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>Python decorators are a powerful tool to remove redundancy. Along with modularizing functionality into appropriate bite-sized methods, it makes even the most complex workflows into concise functionality.</p>
+</blockquote>
+<p>For example, let’s look at the Django web framework, which handles requests by methods which receive a method object and return a response object:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle_request</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">"Hello, World"</span>)</span><br></pre></td></tr></table></figure>
+<p>A case I ran into recently was having to write several api methods which must:</p>
+<ul>
+<li>return json responses some must return an error code if it’s a GET</li>
+<li>request vs a POST</li>
+</ul>
+<a id="more"></a>
+<p>As an example, for a register api endpoint, I would write something like this:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(request)</span>:</span></span><br><span class="line">    result = <span class="keyword">None</span></span><br><span class="line">    <span class="comment"># check for post only</span></span><br><span class="line">    <span class="keyword">if</span> request.method != <span class="string">'POST'</span>:</span><br><span class="line">        result = &#123;<span class="string">"error"</span>: <span class="string">"this method only accepts posts!"</span>&#125;</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            user = User.objects.create_user(request.POST[<span class="string">'username'</span>],</span><br><span class="line">                                            request.POST[<span class="string">'email'</span>],</span><br><span class="line">                                            request.POST[<span class="string">'password'</span>])</span><br><span class="line">            <span class="comment"># optional fields</span></span><br><span class="line">            <span class="keyword">for</span> field <span class="keyword">in</span> [<span class="string">'first_name'</span>, <span class="string">'last_name'</span>]:</span><br><span class="line">                <span class="keyword">if</span> field <span class="keyword">in</span> request.POST:</span><br><span class="line">                    setattr(user, field, request.POST[field])</span><br><span class="line">            user.save()</span><br><span class="line">            result = &#123;<span class="string">"success"</span>: <span class="keyword">True</span>&#125;</span><br><span class="line">        <span class="keyword">except</span> KeyError <span class="keyword">as</span> e:</span><br><span class="line">            result = &#123;<span class="string">"error"</span>: str(e) &#125;</span><br><span class="line">    response = HttpResponse(json.dumps(result))</span><br><span class="line">    <span class="keyword">if</span> <span class="string">"error"</span> <span class="keyword">in</span> result:</span><br><span class="line">        response.status_code = <span class="number">500</span></span><br><span class="line">    <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+<p>However, I’m going to need json responses and error returned in pretty much every api method I create. This would result in a majority of logic reproduced over and over again. Let’s try implementing some DRY principles with decorators.</p>
+<h2 id="Decorator-Introduction"><a href="#Decorator-Introduction" class="headerlink" title="Decorator Introduction"></a>Decorator Introduction</h2><p>If you’re not familiar with decorators, they are effectively function wrappers that are run when the python interpreter loads the function, and can modify what the function receives and returns. For example, if I wanted to always return an integer result of one larger than whatever was returned, I could write my decorator as so:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># a decorator receives the method it's wrapping as a variable 'f'</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">increment</span><span class="params">(f)</span>:</span></span><br><span class="line">    <span class="comment"># we use arbitrary args and keywords to</span></span><br><span class="line">    <span class="comment"># ensure we grab all the input arguments.</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapped_f</span><span class="params">(*args, **kw)</span>:</span></span><br><span class="line">        <span class="comment"># note we call f against the variables passed into the wrapper,</span></span><br><span class="line">        <span class="comment"># and cast the result to an int and increment .</span></span><br><span class="line">        <span class="keyword">return</span> int(f(*args, **kw)) + <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> wrapped_f  <span class="comment"># the wrapped function gets returned.</span></span><br></pre></td></tr></table></figure>
+<p>And now we can use it to decorate another method using the ‘@’ symbol:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@increment</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plus</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> a + b</span><br><span class="line"></span><br><span class="line">result = plus(<span class="number">4</span>, <span class="number">6</span>)</span><br><span class="line"><span class="keyword">assert</span>(result == <span class="number">11</span>, <span class="string">"We wrote our decorator wrong!"</span>)</span><br></pre></td></tr></table></figure>
+<p>Decorators modify the existing function, and assign the variable to whatever is returned by the decorator. In this case, ‘plus’ really refers to the result of increment(plus).</p>
+<h2 id="Return-an-error-on-non-post-requests"><a href="#Return-an-error-on-non-post-requests" class="headerlink" title="Return an error on non-post requests"></a>Return an error on non-post requests</h2><p>Now let’s apply decorators to something useful. Let’s make a decorator that returns an error response if the request received isn’t a POST request in django:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">post_only</span><span class="params">(f)</span>:</span></span><br><span class="line">    <span class="string">""" Ensures a method is post only """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapped_f</span><span class="params">(request)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> request.method != <span class="string">"POST"</span>:</span><br><span class="line">            response = HttpResponse(json.dumps(</span><br><span class="line">                &#123;<span class="string">"error"</span>: <span class="string">"this method only accepts posts!"</span>&#125;))</span><br><span class="line">            response.status_code = <span class="number">500</span></span><br><span class="line">            <span class="keyword">return</span> response</span><br><span class="line">        <span class="keyword">return</span> f(request)</span><br><span class="line">    <span class="keyword">return</span> wrapped_f</span><br></pre></td></tr></table></figure>
+<p>Now, we can apply this to our register api above:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@post_only</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(request)</span>:</span></span><br><span class="line">    result = <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        user = User.objects.create_user(request.POST[<span class="string">'username'</span>],</span><br><span class="line">                                        request.POST[<span class="string">'email'</span>],</span><br><span class="line">                                        request.POST[<span class="string">'password'</span>])</span><br><span class="line">        <span class="comment"># optional fields</span></span><br><span class="line">        <span class="keyword">for</span> field <span class="keyword">in</span> [<span class="string">'first_name'</span>, <span class="string">'last_name'</span>]:</span><br><span class="line">            <span class="keyword">if</span> field <span class="keyword">in</span> request.POST:</span><br><span class="line">                setattr(user, field, request.POST[field])</span><br><span class="line">        user.save()</span><br><span class="line">        result = &#123;<span class="string">"success"</span>: <span class="keyword">True</span>&#125;</span><br><span class="line">    <span class="keyword">except</span> KeyError <span class="keyword">as</span> e:</span><br><span class="line">        result = &#123;<span class="string">"error"</span>: str(e) &#125;</span><br><span class="line">    response = HttpResponse(json.dumps(result))</span><br><span class="line">    <span class="keyword">if</span> <span class="string">"error"</span> <span class="keyword">in</span> result:</span><br><span class="line">        response.status_code = <span class="number">500</span></span><br><span class="line">    <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+<p>And now we have a repeatable decorator we can apply to every api method we have.</p>
+<h2 id="Send-the-response-as-json"><a href="#Send-the-response-as-json" class="headerlink" title="Send the response as json"></a>Send the response as json</h2><p>To send the response as json (and also handle the 500 status code while we’re at it), we can just create another decorator:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">json_response</span><span class="params">(f)</span>:</span></span><br><span class="line">    <span class="string">""" Return the response as json, and return a 500 error code if an error exists """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapped</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        result = f(*args, **kwargs)</span><br><span class="line">        response = HttpResponse(json.dumps(result))</span><br><span class="line">        <span class="keyword">if</span> type(result) == dict <span class="keyword">and</span> <span class="string">'error'</span> <span class="keyword">in</span> result:</span><br><span class="line">            response.status_code = <span class="number">500</span></span><br><span class="line">        <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+<p>Now we can remove the json code from our methods, and add a decorator instead:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@post_only</span></span><br><span class="line"><span class="meta">@json_response</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        user = User.objects.create_user(request.POST[<span class="string">'username'</span>],</span><br><span class="line">                                        request.POST[<span class="string">'email'</span>],</span><br><span class="line">                                        request.POST[<span class="string">'password'</span>])</span><br><span class="line">        <span class="comment"># optional fields</span></span><br><span class="line">        <span class="keyword">for</span> field <span class="keyword">in</span> [<span class="string">'first_name'</span>, <span class="string">'last_name'</span>]:</span><br><span class="line">            <span class="keyword">if</span> field <span class="keyword">in</span> request.POST:</span><br><span class="line">                setattr(user, field, request.POST[field])</span><br><span class="line">        user.save()</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">"success"</span>: <span class="keyword">True</span>&#125;</span><br><span class="line">    <span class="keyword">except</span> KeyError <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">"error"</span>: str(e) &#125;</span><br></pre></td></tr></table></figure>
+<p>Now, if I need to write a new method, I can just use these decorators to re-do the redundant work. If I need to make a sign-in method, I only have to write the real relevant code a second time:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@post_only</span></span><br><span class="line"><span class="meta">@json_response</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> request.user <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">"error"</span>: <span class="string">"User is already authenticated!"</span>&#125;</span><br><span class="line">    user = auth.authenticate(request.POST[<span class="string">'username'</span>], request.POST[<span class="string">'password'</span>])</span><br><span class="line">    <span class="keyword">if</span> user <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> user.is_active:</span><br><span class="line">            <span class="keyword">return</span> &#123;<span class="string">"error"</span>: <span class="string">"User is inactive"</span>&#125;</span><br><span class="line">        auth.login(request, user)</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">"success"</span>: <span class="keyword">True</span>, <span class="string">"id"</span>: user.pk&#125;</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">"error"</span>: <span class="string">"User does not exist with those credentials"</span>&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="BONUS-parameterizing-your-request-method"><a href="#BONUS-parameterizing-your-request-method" class="headerlink" title="BONUS: parameterizing your request method"></a>BONUS: parameterizing your request method</h2><p>I’ve used the Turbogears framework for python, and something I’ve fallen in love with is the way query parameters are interpreted and passed directory into the method. So how can I mimic this behaviour in Django? Well, a decorator is one way!</p>
+<p>Here’s one:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parameterize_request</span><span class="params">(types=<span class="params">(<span class="string">"POST"</span>,)</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Parameterize the request instead of parsing the request directly.</span></span><br><span class="line"><span class="string">    Only the types specified will be added to the query parameters.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    e.g. convert a=test&amp;b=cv in request.POST to</span></span><br><span class="line"><span class="string">    f(a=test, b=cv)</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(f)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapped</span><span class="params">(request)</span>:</span></span><br><span class="line">            kw = &#123;&#125;</span><br><span class="line">            <span class="keyword">if</span> <span class="string">"GET"</span> <span class="keyword">in</span> types:</span><br><span class="line">                <span class="keyword">for</span> k, v <span class="keyword">in</span> request.GET.items():</span><br><span class="line">                    kw[k] = v</span><br><span class="line">            <span class="keyword">if</span> <span class="string">"POST"</span> <span class="keyword">in</span> types:</span><br><span class="line">                <span class="keyword">for</span> k, v <span class="keyword">in</span> request.POST.items():</span><br><span class="line">                    kw[k] = v</span><br><span class="line">            <span class="keyword">return</span> f(request, **kw)</span><br><span class="line">        <span class="keyword">return</span> wrapped</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br></pre></td></tr></table></figure>
+<p>Note that this is an example of a parameterized decorator. In this case, the result of the function is the actual decorator.</p>
+<p>Now, I can write my methods with parameterized arguments! I can even choose whether to allow GET and POST, or just one type of query parameter.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@post_only</span></span><br><span class="line"><span class="meta">@json_response</span></span><br><span class="line"><span class="meta">@parameterize_request(["POST"])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(request, username, email, password,</span></span></span><br><span class="line"><span class="function"><span class="params">             first_name=None, last_name=None)</span>:</span></span><br><span class="line">    user = User.objects.create_user(username, email, password)</span><br><span class="line">    user.first_name=first_name</span><br><span class="line">    user.last_name=last_name</span><br><span class="line">    user.save()</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">"success"</span>: <span class="keyword">True</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>Now, we have a succinct, and easily understandable api!</p>
+<h2 id="BONUS-2-Using-functools-wraps-to-preserve-docstrings-and-function-name"><a href="#BONUS-2-Using-functools-wraps-to-preserve-docstrings-and-function-name" class="headerlink" title="BONUS 2: Using functools.wraps to preserve docstrings and function name"></a>BONUS 2: Using functools.wraps to preserve docstrings and function name</h2><p>(Credit goes to Wes Turner to pointing this out)</p>
+<p>Unfortunately, one of the side effects of using decorators is that the method’s name (name) and docstring (doc) values are not preserved:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">increment</span><span class="params">(f)</span>:</span></span><br><span class="line">    <span class="string">""" Increment a function result """</span></span><br><span class="line">    wrapped_f(a, b):</span><br><span class="line">        <span class="keyword">return</span> f(a, b) + <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> wrapped_f</span><br><span class="line"></span><br><span class="line"><span class="meta">@increment</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plus</span><span class="params">(a, b)</span></span></span><br><span class="line"><span class="function">    """ <span class="title">Add</span> <span class="title">two</span> <span class="title">things</span> <span class="title">together</span> """</span></span><br><span class="line"><span class="function">    <span class="title">return</span> <span class="title">a</span> + <span class="title">b</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># <span class="title">this</span> <span class="title">is</span> <span class="title">now</span> '<span class="title">wrapped_f</span>' <span class="title">instead</span> <span class="title">of</span> '<span class="title">plus</span>'</span></span><br><span class="line"><span class="function"><span class="title">plus</span>.<span class="title">__name__</span></span></span><br><span class="line"><span class="function"># <span class="title">this</span> <span class="title">now</span> <span class="title">returns</span> '<span class="title">Increment</span> <span class="title">a</span> <span class="title">function</span> <span class="title">result</span>'</span></span><br><span class="line"><span class="function"># <span class="title">instead</span> <span class="title">of</span> '<span class="title">Add</span> <span class="title">two</span> <span class="title">things</span> <span class="title">together</span>'</span></span><br><span class="line"><span class="function"><span class="title">plus</span>.<span class="title">__doc__</span></span></span><br></pre></td></tr></table></figure>
+<p>This causes issues for applications which use reflection, like Sphinx, a library to that automatically generates documentation for your python code.</p>
+<p>To resolve this, you can use a ‘wraps’ decorator to attach the name and docstring:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">increment</span><span class="params">(f)</span>:</span></span><br><span class="line">    <span class="string">""" Increment a function result """</span></span><br><span class="line"><span class="meta">    @wraps(f)</span></span><br><span class="line">    wrapped_f(a, b):</span><br><span class="line">        <span class="keyword">return</span> f(a, b) + <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> wrapped_f</span><br><span class="line"></span><br><span class="line"><span class="meta">@increment</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plus</span><span class="params">(a, b)</span></span></span><br><span class="line"><span class="function">    """ <span class="title">Add</span> <span class="title">two</span> <span class="title">things</span> <span class="title">together</span> """</span></span><br><span class="line"><span class="function">    <span class="title">return</span> <span class="title">a</span> + <span class="title">b</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">plus</span>.<span class="title">__name__</span>  # <span class="title">this</span> <span class="title">returns</span> '<span class="title">plus</span>'</span></span><br><span class="line"><span class="function"><span class="title">plus</span>.<span class="title">__doc__</span>   # <span class="title">this</span> <span class="title">returns</span> '<span class="title">Add</span> <span class="title">two</span> <span class="title">things</span> <span class="title">together</span>'</span></span><br></pre></td></tr></table></figure>
+<h2 id="BONUS-3-Using-the-‘decorator’-decorator"><a href="#BONUS-3-Using-the-‘decorator’-decorator" class="headerlink" title="BONUS 3: Using the ‘decorator’ decorator"></a>BONUS 3: Using the ‘decorator’ decorator</h2><p>(Credit goes to LeszekSwirski for this awesome tip.)</p>
+<p><strong>NOTE: Elghinn mentions in the comments that there are caveats<br>to using this decorator.<br>If you look at the way decorators above, there is a lost of repeating going on there as well, in the declaring and returning of a wrapper.</strong></p>
+<p>you can install the python egg ‘decorator’, which includes a ‘decorator’ decorator that provides the decorator boilerplate for you!</p>
+<p>With easy_install: </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo easy_install decorator</span><br></pre></td></tr></table></figure>
+<p>Or Pip: </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install decorator</span><br></pre></td></tr></table></figure>
+<p>Then you can simply write:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> decorator <span class="keyword">import</span> decorator</span><br><span class="line"></span><br><span class="line"><span class="meta">@decorator</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">post_only</span><span class="params">(f, request)</span>:</span></span><br><span class="line">    <span class="string">""" Ensures a method is post only """</span></span><br><span class="line">    <span class="keyword">if</span> request.method != <span class="string">"POST"</span>:</span><br><span class="line">        response = HttpResponse(json.dumps(</span><br><span class="line">            &#123;<span class="string">"error"</span>: <span class="string">"this method only accepts posts!"</span>&#125;))</span><br><span class="line">        response.status_code = <span class="number">500</span></span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line">    <span class="keyword">return</span> f(request)</span><br></pre></td></tr></table></figure>
+<p>What’s even more awesome about this decorator, is the fact that it preserves the return values of name and doc, so it wraps in the functionality functools.wraps performs as well!</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/05/db_triger/" rel="next" title="数据库触发器before和after">
+                <i class="fa fa-chevron-left"></i> 数据库触发器before和after
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/05/python中的@修饰符/" rel="prev" title="python中的 @ 修饰符">
+                python中的 @ 修饰符 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Crazy Stone" />
+            
+              <p class="site-author-name" itemprop="name">Crazy Stone</p>
+              <p class="site-description motion-element" itemprop="description">step by step...</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Decorator-Introduction"><span class="nav-number">1.</span> <span class="nav-text">Decorator Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Return-an-error-on-non-post-requests"><span class="nav-number">2.</span> <span class="nav-text">Return an error on non-post requests</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Send-the-response-as-json"><span class="nav-number">3.</span> <span class="nav-text">Send the response as json</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BONUS-parameterizing-your-request-method"><span class="nav-number">4.</span> <span class="nav-text">BONUS: parameterizing your request method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BONUS-2-Using-functools-wraps-to-preserve-docstrings-and-function-name"><span class="nav-number">5.</span> <span class="nav-text">BONUS 2: Using functools.wraps to preserve docstrings and function name</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BONUS-3-Using-the-‘decorator’-decorator"><span class="nav-number">6.</span> <span class="nav-text">BONUS 3: Using the ‘decorator’ decorator</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Crazy Stone</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

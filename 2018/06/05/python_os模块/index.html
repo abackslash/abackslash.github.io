@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="虽然进程可在单独的内存空间中执行，但除非这些Python进程在单独的处理器上执行，否则，实际并不是“同时”运行的。是由操作系统把处理器的时间片分配给一个进程，用完时间片后就需退出处理器等待另一个时间片的到来。 另一种方式是在在程序中指定多个“执行线程”，让它们在相同的内存空间中工作。这称为“多线程处理”。线程比进程更有效，因为操作系统不必为每个线程创建单独的内存空间。新建进程用 os.fork 函">
+<meta name="keywords" content="iOS,Android,Python,React-Native,Java,PostgreSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python os 模块">
+<meta property="og:url" content="http://crazystone.com/2018/06/05/python_os模块/index.html">
+<meta property="og:site_name" content="疯狂的石头">
+<meta property="og:description" content="虽然进程可在单独的内存空间中执行，但除非这些Python进程在单独的处理器上执行，否则，实际并不是“同时”运行的。是由操作系统把处理器的时间片分配给一个进程，用完时间片后就需退出处理器等待另一个时间片的到来。 另一种方式是在在程序中指定多个“执行线程”，让它们在相同的内存空间中工作。这称为“多线程处理”。线程比进程更有效，因为操作系统不必为每个线程创建单独的内存空间。新建进程用 os.fork 函">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-06-05T14:42:51.329Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python os 模块">
+<meta name="twitter:description" content="虽然进程可在单独的内存空间中执行，但除非这些Python进程在单独的处理器上执行，否则，实际并不是“同时”运行的。是由操作系统把处理器的时间片分配给一个进程，用完时间片后就需退出处理器等待另一个时间片的到来。 另一种方式是在在程序中指定多个“执行线程”，让它们在相同的内存空间中工作。这称为“多线程处理”。线程比进程更有效，因为操作系统不必为每个线程创建单独的内存空间。新建进程用 os.fork 函">
+
+
+
+
+
+
+  <link rel="canonical" href="http://crazystone.com/2018/06/05/python_os模块/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>python os 模块 | 疯狂的石头</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">疯狂的石头</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://crazystone.com/2018/06/05/python_os模块/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Crazy Stone">
+      <meta itemprop="description" content="step by step...">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="疯狂的石头">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python os 模块
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-05 22:32:01 / 修改时间：22:42:51" itemprop="dateCreated datePublished" datetime="2018-06-05T22:32:01+08:00">2018-06-05</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>虽然进程可在单独的内存空间中执行，但除非这些Python进程在单独的处理器上执行，否则，实际并不是“同时”运行的。是由操作系统把处理器的时间片分配给一个进程，用完时间片后就需退出处理器等待另一个时间片的到来。</p>
+<p>另一种方式是在在程序中指定多个“执行线程”，让它们在相同的内存空间中工作。这称为“多线程处理”。线程比进程更有效，因为操作系统不必为每个线程创建单独的内存空间。新建进程用 <strong>os.fork</strong> 函数。但它只在 <strong>POSIX</strong> 系统上可用，在windows版的Python中，os模块没有定义 <strong>os.fork</strong> 函数。相反，windows程序员用多线程编程技术来完成并发任务。</p>
+<a id="more"></a>
+<p><strong>os.fork</strong> 函数创建进程的过程是这样的。程序每次执行时，操作系统都会创建一个新进程来运行程序指令。进程还可调用os.fork，要求操作系统新建一个进程。父进程是调用 <strong>os.fork</strong> 函数的进程。父进程所创建的进程叫子进程。</p>
+<p>每个进程都有一个不重复的进程ID号。或称pid，它对进程进行标识。子进程与父进程完全相同，子进程从父进程继承了多个值的拷贝。如全局变量和环境变量。两个进程的唯一区别是fork的返回值。子进程接收返回值0，而父进程接收子进程的pid作为返回值。</p>
+<p>用 <strong>os.fork</strong> 创建的子进程和父进程作为<strong>异步的并发进程</strong>而单独执行。异步是指它们各行其是，相互间不进行同步；并发是指它们可同时执行。所以我们无法知道子进程和父进程的相对速度。</p>
+<p><strong>os.wait</strong> 函数用于等待子进程结束(只适用于UNIX兼容系统)。该函数返回包含两个元素的元组，包括已完成的子进程号pid。以及子进程的退出状态，返回状态为0，表明子进程成功完成。返回状态为正整数表明子进程终止时出错。</p>
+<p>如没有子进程，会引发OSError错误。<strong>os.wait</strong> 要求父进程等待它的任何一个子进程结束执行，然后唤醒父进程。要指示父进程等候一个指定的子进程终止，可在父进程中使用 <strong>os.waitpid</strong> 函数(只适用于unix兼容系统)。</p>
+<p>它可等候一个指定进程结束，然后返回一个双元素元组，其中包括子进程的pid和子进程的退出状态。函数调用将pid作为第一个参数传递。并将一个选项作为第二个选项，如果第一个参数大于0，则waitpid会等待该pid结束，如果第一个参数是-1，则会等候所有子进程，也就和 <strong>os.wait</strong> 一样。</p>
+<p><strong>os.fork()</strong> 和 <strong>os.wait()</strong> 示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> signal</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">onsigchld</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    print(<span class="string">'收到子进程结束信号'</span>)</span><br><span class="line">signal.signal(signal.SIGCHLD, onsigchld)</span><br><span class="line"></span><br><span class="line">pid = os.fork()</span><br><span class="line"><span class="keyword">if</span> pid == <span class="number">0</span>:</span><br><span class="line">    print(<span class="string">'我是子进程,pid是'</span>, os.getpid())</span><br><span class="line">    sleep(<span class="number">2</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">'我是父进程,pid是'</span>, os.getpid())</span><br><span class="line">    <span class="comment"># 等待子进程结束</span></span><br><span class="line">    os.wait()</span><br><span class="line"></span><br><span class="line">输出：</span><br><span class="line">我是父进程,pid是 <span class="number">92694</span></span><br><span class="line">我是子进程,pid是 <span class="number">92695</span></span><br><span class="line">收到子进程结束信号</span><br></pre></td></tr></table></figure>
+<p>用 <strong>os.system</strong> 和 <strong>os.exec</strong> 函数族来执行系统命令和其它程序。<strong>os.system</strong> 使用shell来执行系统命令，然后在命令结束之后把控制权返回给原始进程；<strong>os.exec</strong> 函数族在执行完命令后不将控制权返回给调用进程。它会接管Python进程，pid不变。这两个函数支持unix和windows平台。</p>
+<p><strong>os.popen()</strong> 函数可执行命令，并获得命令的stdout流。函数要取得两个参数，一个是要执行的命令，另一个是调用函数所用的模式。如“r”只读模式。<strong>os.popen2()</strong> 函数执行命令，并获得命令的stdout流和stdin流。函数返回一个元组，其中包含有两个文件对象，一个对象对应stdin流，一个对象对应stdout流。</p>
+<p>进程使用IPC机制在进程间传递信息，一种IPC机制是“管道”，它是一种类似于文件的对象，提供单向通信渠道。父进程可打开一个管道，再分支一个子进程。父进程使用管道将信息写入(发送到)子进程，而子进程使用管道从父进程读取信息。在python中使用 <strong>os.pipe</strong> 函数创建管道。</p>
+<p><strong>os._exit()</strong> 类似于 <strong>sys.exit()</strong>，但它不执行任何的清除工作(例如刷新缓冲区)。所以 <strong>os._exit()</strong> 尤其适用于退出子进程。如果程序使用 <strong>sys.exit()</strong>，操作系统会回收父进程或其它子进程可能仍然需要的资源。传给 <strong>os._exit()</strong> 函数的参数必须是进程的退出状态。退出状态为0，表示正常终止。</p>
+<p>进程也可用信号进行通信。所谓“信号”，是操作系统采取异步方式传给程序的消息。如 <strong>CTRL+C</strong> 会传递一个“中断信号”，通常该信号导致程序中止。然而程序完全可以指定用不同的行动来响应任何一个信号。在信号处理中，程序要接收信号，并根据那个信号采取一项行动。</p>
+<p>错误（例如向已关闭管道写入）、事件（例如计时器变成0）以及用户输入（例如按ctrl+c）都会产生信号。针对每个信号，每个python程序都有一个默认的信号处理程序，并不是所有操作系统都能从一个正在运行的程序创建单独的进程，所以，进程管理是移植性最差的一项Python进程特性。每个系统都定义了特有信号集。signal是依赖于具体平台的模块，其中只包含系统定义的信号。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/05/python中的@修饰符/" rel="next" title="python中的 @ 修饰符">
+                <i class="fa fa-chevron-left"></i> python中的 @ 修饰符
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/05/Python_yield/" rel="prev" title="Python yield 使用浅析">
+                Python yield 使用浅析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Crazy Stone" />
+            
+              <p class="site-author-name" itemprop="name">Crazy Stone</p>
+              <p class="site-description motion-element" itemprop="description">step by step...</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Crazy Stone</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="AttributedString 可以分为 NSAttributedString 和 NSMutableAttributedString 两种。在使用中通过将 AttributedString 赋值给控件的 attributedText 属性来添加文字样式。控件包括UILabel、UITextField和UITextView等。">
+<meta name="keywords" content="iOS,Android,Python,React-Native,Java,PostgreSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AttributedString 使用">
+<meta property="og:url" content="http://crazystone.com/2018/06/06/AttributedString/index.html">
+<meta property="og:site_name" content="疯狂的石头">
+<meta property="og:description" content="AttributedString 可以分为 NSAttributedString 和 NSMutableAttributedString 两种。在使用中通过将 AttributedString 赋值给控件的 attributedText 属性来添加文字样式。控件包括UILabel、UITextField和UITextView等。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://crazystone.com/2018/06/06/AttributedString/attr.png">
+<meta property="og:updated_time" content="2018-06-06T15:02:14.418Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AttributedString 使用">
+<meta name="twitter:description" content="AttributedString 可以分为 NSAttributedString 和 NSMutableAttributedString 两种。在使用中通过将 AttributedString 赋值给控件的 attributedText 属性来添加文字样式。控件包括UILabel、UITextField和UITextView等。">
+<meta name="twitter:image" content="http://crazystone.com/2018/06/06/AttributedString/attr.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://crazystone.com/2018/06/06/AttributedString/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>AttributedString 使用 | 疯狂的石头</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">疯狂的石头</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://crazystone.com/2018/06/06/AttributedString/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Crazy Stone">
+      <meta itemprop="description" content="step by step...">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="疯狂的石头">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AttributedString 使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-06 22:56:39 / 修改时间：23:02:14" itemprop="dateCreated datePublished" datetime="2018-06-06T22:56:39+08:00">2018-06-06</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>AttributedString 可以分为 NSAttributedString 和 NSMutableAttributedString 两种。在使用中通过将 AttributedString 赋值给控件的 attributedText 属性来添加文字样式。控件包括UILabel、UITextField和UITextView等。</p>
+</blockquote>
+<a id="more"></a>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// NSFontAttributeName                设置字体属性，默认值：字体：Helvetica(Neue) 字号：12</span></span><br><span class="line"><span class="comment">// NSForegroundColorAttributeNam      设置字体颜色，取值为 UIColor对象，默认值为黑色</span></span><br><span class="line"><span class="comment">// NSBackgroundColorAttributeName     设置字体所在区域背景颜色，取值为 UIColor对象，默认值为nil, 透明色</span></span><br><span class="line"><span class="comment">// NSLigatureAttributeName            设置连体属性，取值为NSNumber 对象(整数)，0 表示没有连体字符，1 表示使用默认的连体字符</span></span><br><span class="line"><span class="comment">// NSKernAttributeName                设定字符间距，取值为 NSNumber 对象（整数），正值间距加宽，负值间距变窄</span></span><br><span class="line"><span class="comment">// NSStrikethroughStyleAttributeName  设置删除线，取值为 NSNumber 对象（整数）</span></span><br><span class="line"><span class="comment">// NSStrikethroughColorAttributeName  设置删除线颜色，取值为 UIColor 对象，默认值为黑色</span></span><br><span class="line"><span class="comment">// NSUnderlineStyleAttributeName      设置下划线，取值为 NSNumber 对象（整数），枚举常量 NSUnderlineStyle中的值，与删除线类似</span></span><br><span class="line"><span class="comment">// NSUnderlineColorAttributeName      设置下划线颜色，取值为 UIColor 对象，默认值为黑色</span></span><br><span class="line"><span class="comment">// NSStrokeWidthAttributeName         设置笔画宽度，取值为 NSNumber 对象（整数），负值填充效果，正值中空效果</span></span><br><span class="line"><span class="comment">// NSStrokeColorAttributeName         填充部分颜色，不是字体颜色，取值为 UIColor 对象</span></span><br><span class="line"><span class="comment">// NSShadowAttributeName              设置阴影属性，取值为 NSShadow 对象</span></span><br><span class="line"><span class="comment">// NSTextEffectAttributeName          设置文本特殊效果，取值为 NSString 对象，目前只有图版印刷效果可用：</span></span><br><span class="line"><span class="comment">// NSBaselineOffsetAttributeName      设置基线偏移值，取值为 NSNumber （float）,正值上偏，负值下偏</span></span><br><span class="line"><span class="comment">// NSObliquenessAttributeName         设置字形倾斜度，取值为 NSNumber （float）,正值右倾，负值左倾</span></span><br><span class="line"><span class="comment">// NSExpansionAttributeName           设置文本横向拉伸属性，取值为 NSNumber （float）,正值横向拉伸文本，负值横向压缩文本</span></span><br><span class="line"><span class="comment">// NSWritingDirectionAttributeName    设置文字书写方向，从左向右书写或者从右向左书写</span></span><br><span class="line"><span class="comment">// NSVerticalGlyphFormAttributeName   设置文字排版方向，取值为 NSNumber 对象(整数)，0 表示横排文本，1 表示竖排文本</span></span><br><span class="line"><span class="comment">// NSLinkAttributeName                设置链接属性，点击后调用浏览器打开指定URL地址</span></span><br><span class="line"><span class="comment">// NSAttachmentAttributeName          设置文本附件,取值为NSTextAttachment对象,常用于文字图片混排</span></span><br><span class="line"><span class="comment">// NSParagraphStyleAttributeName      设置文本段落排版格式，取值为 NSParagraphStyle 对象</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">UILabel</span> *textLabel1 = [[<span class="built_in">UILabel</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">10</span>, <span class="number">64</span>, <span class="number">300</span>, <span class="number">30</span>)];</span><br><span class="line">textLabel1.numberOfLines = <span class="number">0</span>;</span><br><span class="line">textLabel1.textAlignment = <span class="built_in">NSTextAlignmentLeft</span>;</span><br><span class="line"><span class="built_in">UILabel</span> *textLabel2 = [[<span class="built_in">UILabel</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">10</span>, <span class="number">94</span>, <span class="number">300</span>, <span class="number">30</span>)];</span><br><span class="line">textLabel2.numberOfLines = <span class="number">0</span>;</span><br><span class="line">textLabel2.textAlignment = <span class="built_in">NSTextAlignmentLeft</span>;</span><br><span class="line"><span class="built_in">UILabel</span> *textLabel3 = [[<span class="built_in">UILabel</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">10</span>, <span class="number">124</span>, <span class="number">300</span>, <span class="number">60</span>)];</span><br><span class="line">textLabel3.numberOfLines = <span class="number">0</span>;</span><br><span class="line">textLabel3.textAlignment = <span class="built_in">NSTextAlignmentLeft</span>;</span><br><span class="line">[<span class="keyword">self</span>.view addSubview:textLabel1];</span><br><span class="line">[<span class="keyword">self</span>.view addSubview:textLabel2];</span><br><span class="line">[<span class="keyword">self</span>.view addSubview:textLabel3];</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSString</span> *str = <span class="string">@"Hello, the Word!"</span>;</span><br><span class="line"><span class="comment">//第一种，首先初始化一个NSMutableAttributedString对象，然后向里面添加attribute</span></span><br><span class="line"><span class="built_in">NSMutableAttributedString</span> *attribute = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:str];</span><br><span class="line">[attribute addAttribute:<span class="built_in">NSFontAttributeName</span> value:[<span class="built_in">UIFont</span> fontWithName:<span class="string">@"Courier"</span> size:<span class="number">20.0</span>]</span><br><span class="line">                  range:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, str.length)];</span><br><span class="line">[attribute addAttribute:<span class="built_in">NSForegroundColorAttributeName</span> value:[<span class="built_in">UIColor</span> blueColor] range:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, <span class="number">4</span>)];</span><br><span class="line">[attribute addAttribute:<span class="built_in">NSForegroundColorAttributeName</span> value:[<span class="built_in">UIColor</span> redColor] range:<span class="built_in">NSMakeRange</span>(<span class="number">4</span>, <span class="number">5</span>)];</span><br><span class="line">textLabel1.attributedText = attribute;</span><br><span class="line"></span><br><span class="line"><span class="comment">//第二种，首先创建属性字典，然后在初始化AttributeString时使用</span></span><br><span class="line"><span class="built_in">NSDictionary</span> *attriDic = @&#123;<span class="built_in">NSFontAttributeName</span> : [<span class="built_in">UIFont</span> fontWithName:<span class="string">@"Courier"</span> size:<span class="number">20.0</span>],</span><br><span class="line">                <span class="built_in">NSForegroundColorAttributeName</span> : [<span class="built_in">UIColor</span> blueColor]&#125;;</span><br><span class="line">textLabel2.attributedText = [[<span class="built_in">NSAttributedString</span> alloc] initWithString:str attributes:attriDic];</span><br><span class="line"></span><br><span class="line"><span class="comment">//NSAttachmentAttributeName 设置文本附件,取值为NSTextAttachment对象,常用于文字图片混排</span></span><br><span class="line"><span class="built_in">NSTextAttachment</span> *textAttachment01 = [[<span class="built_in">NSTextAttachment</span> alloc] init];</span><br><span class="line">textAttachment01.image = [<span class="built_in">UIImage</span> imageNamed: <span class="string">@"lightsky.png"</span>];  <span class="comment">//设置图片源</span></span><br><span class="line">textAttachment01.bounds = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">-20</span>, <span class="number">60</span>, <span class="number">60</span>);            <span class="comment">//设置图片位置和大小</span></span><br><span class="line"><span class="built_in">NSMutableAttributedString</span> *attrStr = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:str];</span><br><span class="line">[attrStr addAttribute: <span class="built_in">NSFontAttributeName</span> value:[<span class="built_in">UIFont</span> fontWithName:<span class="string">@"Courier"</span> size:<span class="number">20.0</span>]</span><br><span class="line">                range:<span class="built_in">NSMakeRange</span>(<span class="number">0</span>, str.length)];</span><br><span class="line"><span class="built_in">NSAttributedString</span> *attrStr_1 = [<span class="built_in">NSAttributedString</span> attributedStringWithAttachment:textAttachment01];</span><br><span class="line"><span class="comment">//NSTextAttachment占用一个字符长度，插入后原字符串长度增加1</span></span><br><span class="line">[attrStr insertAttributedString: attrStr_1 atIndex:<span class="number">2</span>];</span><br><span class="line">textLabel3.attributedText = attrStr;</span><br></pre></td></tr></table></figure>
+<img src="/2018/06/06/AttributedString/attr.png" title="attributed">
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/06/memcpy/" rel="next" title="memcpy函数 & 使用泛型指针交换任何类型数据">
+                <i class="fa fa-chevron-left"></i> memcpy函数 & 使用泛型指针交换任何类型数据
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/06/NSKeyedArchiver/" rel="prev" title="NSKeyedArchiver">
+                NSKeyedArchiver <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Crazy Stone" />
+            
+              <p class="site-author-name" itemprop="name">Crazy Stone</p>
+              <p class="site-description motion-element" itemprop="description">step by step...</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Crazy Stone</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

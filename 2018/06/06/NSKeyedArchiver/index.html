@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="base64编码该编码使用64个明文来编码任意的二进制文件，它里面只使用了 A-Z, a-z, 0-9, +, / 这64个字符。（编码里面的“=”是填充字符） base64编码使加密算法更加简洁高效。 算法详解Base64编码要求把3个8位（bit）即1字节（byte）转化为4个6位的字节，之后在6位的前面补两个0，形成8位一个字节的形式。">
+<meta name="keywords" content="iOS,Android,Python,React-Native,Java,PostgreSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NSKeyedArchiver">
+<meta property="og:url" content="http://crazystone.com/2018/06/06/NSKeyedArchiver/index.html">
+<meta property="og:site_name" content="疯狂的石头">
+<meta property="og:description" content="base64编码该编码使用64个明文来编码任意的二进制文件，它里面只使用了 A-Z, a-z, 0-9, +, / 这64个字符。（编码里面的“=”是填充字符） base64编码使加密算法更加简洁高效。 算法详解Base64编码要求把3个8位（bit）即1字节（byte）转化为4个6位的字节，之后在6位的前面补两个0，形成8位一个字节的形式。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-06-06T15:16:55.974Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NSKeyedArchiver">
+<meta name="twitter:description" content="base64编码该编码使用64个明文来编码任意的二进制文件，它里面只使用了 A-Z, a-z, 0-9, +, / 这64个字符。（编码里面的“=”是填充字符） base64编码使加密算法更加简洁高效。 算法详解Base64编码要求把3个8位（bit）即1字节（byte）转化为4个6位的字节，之后在6位的前面补两个0，形成8位一个字节的形式。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://crazystone.com/2018/06/06/NSKeyedArchiver/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>NSKeyedArchiver | 疯狂的石头</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">疯狂的石头</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://crazystone.com/2018/06/06/NSKeyedArchiver/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Crazy Stone">
+      <meta itemprop="description" content="step by step...">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="疯狂的石头">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">NSKeyedArchiver
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-06 23:10:44 / 修改时间：23:16:55" itemprop="dateCreated datePublished" datetime="2018-06-06T23:10:44+08:00">2018-06-06</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="base64编码"><a href="#base64编码" class="headerlink" title="base64编码"></a>base64编码</h2><p>该编码使用64个明文来编码任意的二进制文件，它里面只使用了 A-Z, a-z, 0-9, +, / 这64个字符。（编码里面的“=”是填充字符）</p>
+<p>base64编码使加密算法更加简洁高效。</p>
+<h3 id="算法详解"><a href="#算法详解" class="headerlink" title="算法详解"></a>算法详解</h3><p>Base64编码要求把3个8位（bit）即1字节（byte）转化为4个6位的字节，之后在6位的前面补两个0，形成8位一个字节的形式。</p>
+<a id="more"></a>
+<h3 id="base64编码表"><a href="#base64编码表" class="headerlink" title="base64编码表"></a>base64编码表</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">码值</th>
+<th style="text-align:left">字符</th>
+<th style="text-align:left">码值</th>
+<th style="text-align:left">字符</th>
+<th style="text-align:left">码值</th>
+<th style="text-align:left">字符</th>
+<th style="text-align:left">码值</th>
+<th style="text-align:left">字符</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:left">A</td>
+<td style="text-align:left">16</td>
+<td style="text-align:left">Q</td>
+<td style="text-align:left">32</td>
+<td style="text-align:left">g</td>
+<td style="text-align:left">48</td>
+<td style="text-align:left">w</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">B</td>
+<td style="text-align:left">17</td>
+<td style="text-align:left">R</td>
+<td style="text-align:left">33</td>
+<td style="text-align:left">h</td>
+<td style="text-align:left">49</td>
+<td style="text-align:left">x</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">C</td>
+<td style="text-align:left">18</td>
+<td style="text-align:left">S</td>
+<td style="text-align:left">34</td>
+<td style="text-align:left">i</td>
+<td style="text-align:left">50</td>
+<td style="text-align:left">y</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">D</td>
+<td style="text-align:left">19</td>
+<td style="text-align:left">T</td>
+<td style="text-align:left">35</td>
+<td style="text-align:left">j</td>
+<td style="text-align:left">51</td>
+<td style="text-align:left">z</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">E</td>
+<td style="text-align:left">20</td>
+<td style="text-align:left">U</td>
+<td style="text-align:left">36</td>
+<td style="text-align:left">k</td>
+<td style="text-align:left">52</td>
+<td style="text-align:left">0</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left">F</td>
+<td style="text-align:left">21</td>
+<td style="text-align:left">V</td>
+<td style="text-align:left">37</td>
+<td style="text-align:left">l</td>
+<td style="text-align:left">53</td>
+<td style="text-align:left">1</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left">G</td>
+<td style="text-align:left">22</td>
+<td style="text-align:left">W</td>
+<td style="text-align:left">38</td>
+<td style="text-align:left">m</td>
+<td style="text-align:left">54</td>
+<td style="text-align:left">2</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left">H</td>
+<td style="text-align:left">23</td>
+<td style="text-align:left">X</td>
+<td style="text-align:left">39</td>
+<td style="text-align:left">n</td>
+<td style="text-align:left">55</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:left">I</td>
+<td style="text-align:left">24</td>
+<td style="text-align:left">Y</td>
+<td style="text-align:left">40</td>
+<td style="text-align:left">o</td>
+<td style="text-align:left">56</td>
+<td style="text-align:left">4</td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:left">J</td>
+<td style="text-align:left">25</td>
+<td style="text-align:left">Z</td>
+<td style="text-align:left">41</td>
+<td style="text-align:left">p</td>
+<td style="text-align:left">57</td>
+<td style="text-align:left">5</td>
+</tr>
+<tr>
+<td style="text-align:left">10</td>
+<td style="text-align:left">K</td>
+<td style="text-align:left">26</td>
+<td style="text-align:left">a</td>
+<td style="text-align:left">42</td>
+<td style="text-align:left">q</td>
+<td style="text-align:left">58</td>
+<td style="text-align:left">6</td>
+</tr>
+<tr>
+<td style="text-align:left">11</td>
+<td style="text-align:left">L</td>
+<td style="text-align:left">27</td>
+<td style="text-align:left">b</td>
+<td style="text-align:left">43</td>
+<td style="text-align:left">r</td>
+<td style="text-align:left">59</td>
+<td style="text-align:left">7</td>
+</tr>
+<tr>
+<td style="text-align:left">12</td>
+<td style="text-align:left">M</td>
+<td style="text-align:left">28</td>
+<td style="text-align:left">c</td>
+<td style="text-align:left">44</td>
+<td style="text-align:left">s</td>
+<td style="text-align:left">60</td>
+<td style="text-align:left">8</td>
+</tr>
+<tr>
+<td style="text-align:left">13</td>
+<td style="text-align:left">N</td>
+<td style="text-align:left">29</td>
+<td style="text-align:left">d</td>
+<td style="text-align:left">45</td>
+<td style="text-align:left">t</td>
+<td style="text-align:left">61</td>
+<td style="text-align:left">9</td>
+</tr>
+<tr>
+<td style="text-align:left">14</td>
+<td style="text-align:left">O</td>
+<td style="text-align:left">30</td>
+<td style="text-align:left">e</td>
+<td style="text-align:left">46</td>
+<td style="text-align:left">u</td>
+<td style="text-align:left">62</td>
+<td style="text-align:left">+</td>
+</tr>
+<tr>
+<td style="text-align:left">15</td>
+<td style="text-align:left">P</td>
+<td style="text-align:left">31</td>
+<td style="text-align:left">f</td>
+<td style="text-align:left">47</td>
+<td style="text-align:left">v</td>
+<td style="text-align:left">63</td>
+<td style="text-align:left">/</td>
+</tr>
+</tbody>
+</table>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>16进制的data：62706c</p>
+<p>转化为二进制： 01100010 01110000 01101100</p>
+<p>分成4*6并加0： 011000 100111 000001 101100</p>
+<p>根据base64编码表转化为字符：YnBs</p>
+<h3 id="base64EncodedString"><a href="#base64EncodedString" class="headerlink" title="base64EncodedString"></a>base64EncodedString</h3><p>随着iOS7正式版推出，Apple增加了使用Base64编解码的支持。</p>
+<h3 id="使用base64编码让数据在NSData和NSString之间转化"><a href="#使用base64编码让数据在NSData和NSString之间转化" class="headerlink" title="使用base64编码让数据在NSData和NSString之间转化"></a>使用base64编码让数据在NSData和NSString之间转化</h3><figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSData</span> *data = [<span class="string">@"Base64 encode test"</span> dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>];</span><br><span class="line"><span class="built_in">NSString</span> *base64Encoded = [data base64EncodedStringWithOptions:<span class="number">0</span>];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"Encoded: %@"</span>, base64Encoded);</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSData</span> *dataFromBase64String = [[<span class="built_in">NSData</span> alloc]</span><br><span class="line">initWithBase64EncodedString:base64Encoded options:<span class="number">0</span>];</span><br><span class="line"><span class="built_in">NSString</span> *base64Decoded = [[<span class="built_in">NSString</span> alloc] </span><br><span class="line">initWithData:dataFromBase64String encoding:<span class="built_in">NSUTF8StringEncoding</span>];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"Decoded: %@"</span>, base64Decoded);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">控制台输出： </span><br><span class="line">Encoded: QmFzZTY0IGVuY29kZSB0ZXN0 </span><br><span class="line">Decoded: Base64 encode test</span><br></pre></td></tr></table></figure>
+<h2 id="NSKeyedArchiver"><a href="#NSKeyedArchiver" class="headerlink" title="NSKeyedArchiver"></a>NSKeyedArchiver</h2><p>KeyedArchiver能够保存这些类型的对象：NSArray, NSDictionary, NSDate, NSNumber, NSString, and NSData.</p>
+<p>如果上面的那些类型不能满足要求，则可以通过使用Protocol NSCoding来自定义自己的对象，要实现一下协议方法：</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">void</span>)encodeWithCoder:(<span class="built_in">NSCoder</span> *)aCoder; </span><br><span class="line">(<span class="keyword">nullable</span> <span class="keyword">instancetype</span>)initWithCoder:(<span class="built_in">NSCoder</span> *)aDecoder;</span><br></pre></td></tr></table></figure>
+<h2 id="归档、解归档对象"><a href="#归档、解归档对象" class="headerlink" title="归档、解归档对象"></a>归档、解归档对象</h2><figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Object *encodeObj = [[Object alloc] init];</span><br><span class="line"><span class="comment">//归档，归档之后还可以对数据进行加密处理</span></span><br><span class="line"><span class="comment">//API Reference对返回值data描述：An NSData object containing the encoded form of </span></span><br><span class="line"><span class="comment">//the object graph whose root object is rootObject. The format of the archive </span></span><br><span class="line"><span class="comment">//is NSPropertyListBinaryFormat_v1_0.</span></span><br><span class="line"><span class="comment">//NSKeyedArchiver的返回值为属性为NSPropertyListBinaryFormat_v1_0的二进制格式。</span></span><br><span class="line"><span class="built_in">NSData</span> *data = [<span class="built_in">NSKeyedArchiver</span> archivedDataWithRootObject:encodeObj];</span><br><span class="line"><span class="built_in">NSString</span> *str = [data base64EncodedStringWithOptions:<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//进行存档等操作</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//解归档</span></span><br><span class="line">data = [[<span class="built_in">NSData</span> alloc] initWithBase64EncodedString:str options:<span class="number">0</span>];</span><br><span class="line">Object *decodedObj = [<span class="built_in">NSKeyedUnarchiver</span> unarchiveObjectWithData:data];</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/06/AttributedString/" rel="next" title="AttributedString 使用">
+                <i class="fa fa-chevron-left"></i> AttributedString 使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Crazy Stone" />
+            
+              <p class="site-author-name" itemprop="name">Crazy Stone</p>
+              <p class="site-description motion-element" itemprop="description">step by step...</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base64编码"><span class="nav-number">1.</span> <span class="nav-text">base64编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法详解"><span class="nav-number">1.1.</span> <span class="nav-text">算法详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#base64编码表"><span class="nav-number">1.2.</span> <span class="nav-text">base64编码表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例"><span class="nav-number">1.3.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#base64EncodedString"><span class="nav-number">1.4.</span> <span class="nav-text">base64EncodedString</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用base64编码让数据在NSData和NSString之间转化"><span class="nav-number">1.5.</span> <span class="nav-text">使用base64编码让数据在NSData和NSString之间转化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSKeyedArchiver"><span class="nav-number">2.</span> <span class="nav-text">NSKeyedArchiver</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归档、解归档对象"><span class="nav-number">3.</span> <span class="nav-text">归档、解归档对象</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Crazy Stone</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
