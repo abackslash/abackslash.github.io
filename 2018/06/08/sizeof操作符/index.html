@@ -108,25 +108,25 @@
 
 
 
-  <meta name="description" content="test new">
+  <meta name="description" content="定义sizeof操作符的作用是返回一个对象或类型名的长度，返回值的类型为size_t，长度的单位是字节。sizeof表达式的结果是编译时常量，该操作符有一下三种语法形式： 123sizeof(type name);sizeof(expr);sizeof expr; 理解 将sizeof用于expo时，并没有计算表达式expr的值。   使用sizeof所得的结果部分的依赖所涉及的类型。   对ch">
 <meta name="keywords" content="iOS,Android,Python,React-Native,Java,PostgreSQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="testNew">
-<meta property="og:url" content="http://crazystone.com/2018/06/02/testNew/index.html">
+<meta property="og:title" content="sizeof 操作符">
+<meta property="og:url" content="http://crazystone.com/2018/06/08/sizeof操作符/index.html">
 <meta property="og:site_name" content="疯狂的石头">
-<meta property="og:description" content="test new">
+<meta property="og:description" content="定义sizeof操作符的作用是返回一个对象或类型名的长度，返回值的类型为size_t，长度的单位是字节。sizeof表达式的结果是编译时常量，该操作符有一下三种语法形式： 123sizeof(type name);sizeof(expr);sizeof expr; 理解 将sizeof用于expo时，并没有计算表达式expr的值。   使用sizeof所得的结果部分的依赖所涉及的类型。   对ch">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-06-02T07:32:51.228Z">
+<meta property="og:updated_time" content="2018-06-08T13:26:32.522Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="testNew">
-<meta name="twitter:description" content="test new">
+<meta name="twitter:title" content="sizeof 操作符">
+<meta name="twitter:description" content="定义sizeof操作符的作用是返回一个对象或类型名的长度，返回值的类型为size_t，长度的单位是字节。sizeof表达式的结果是编译时常量，该操作符有一下三种语法形式： 123sizeof(type name);sizeof(expr);sizeof expr; 理解 将sizeof用于expo时，并没有计算表达式expr的值。   使用sizeof所得的结果部分的依赖所涉及的类型。   对ch">
 
 
 
 
 
 
-  <link rel="canonical" href="http://crazystone.com/2018/06/02/testNew/"/>
+  <link rel="canonical" href="http://crazystone.com/2018/06/08/sizeof操作符/"/>
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>testNew | 疯狂的石头</title>
+  <title>sizeof 操作符 | 疯狂的石头</title>
   
 
 
@@ -281,7 +281,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://crazystone.com/2018/06/02/testNew/">
+    <link itemprop="mainEntityOfPage" href="http://crazystone.com/2018/06/08/sizeof操作符/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Crazy Stone">
@@ -298,7 +298,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">testNew
+          <h1 class="post-title" itemprop="name headline">sizeof 操作符
               
             
           </h1>
@@ -323,7 +323,7 @@
                 
               
 
-              <time title="创建时间：2018-06-02 15:32:05 / 修改时间：15:32:51" itemprop="dateCreated datePublished" datetime="2018-06-02T15:32:05+08:00">2018-06-02</time>
+              <time title="创建时间：2018-06-08 21:26:13 / 修改时间：21:26:32" itemprop="dateCreated datePublished" datetime="2018-06-08T21:26:13+08:00">2018-06-08</time>
             
 
             
@@ -361,8 +361,26 @@
       
 
       
-        <p>test new</p>
-
+        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>sizeof操作符的作用是返回一个对象或类型名的长度，返回值的类型为size_t，长度的单位是字节。sizeof表达式的结果是编译时常量，该操作符有一下三种语法形式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sizeof</span>(type name);</span><br><span class="line"><span class="keyword">sizeof</span>(expr);</span><br><span class="line"><span class="keyword">sizeof</span> expr;</span><br></pre></td></tr></table></figure>
+<h2 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h2><ul>
+<li><p>将sizeof用于expo时，并没有计算表达式expr的值。 </p>
+</li>
+<li><p>使用sizeof所得的结果部分的依赖所涉及的类型。 </p>
+</li>
+<li><p>对char类型或值为char类型的表达式做sizeof操作结果为1。 </p>
+</li>
+<li><p>对引用类型做sizeof操作将返回存放此引用类型对象所需的内存空间大小。 </p>
+</li>
+<li><p>对指针做sizeof操作将返回存放指针所需的内存大小。 </p>
+</li>
+<li><p>对数组做sizeof操作等效于将对其元素类型做sizeof操作的结果乘上数组元素的个数。</p>
+</li>
+</ul>
+<a id="more"></a>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> ch = <span class="string">'B'</span>;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">100</span>;</span><br><span class="line">    <span class="keyword">int</span> &amp;ref = i;</span><br><span class="line">    <span class="keyword">int</span> ar[<span class="number">10</span>];</span><br><span class="line">    <span class="built_in">string</span> str = <span class="string">"string"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span>(ch)  &lt;&lt; <span class="built_in">endl</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="keyword">char</span>)   &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span>(ref) &lt;&lt; <span class="built_in">endl</span> &lt;&lt; <span class="keyword">sizeof</span>(i)      &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span>(ar)  &lt;&lt; <span class="built_in">endl</span> &lt;&lt; <span class="keyword">sizeof</span>(ar[<span class="number">10</span>]) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="keyword">long</span>)&lt;&lt; <span class="built_in">endl</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="keyword">short</span>)  &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span>(str) &lt;&lt; <span class="built_in">endl</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="string">"strin"</span>)&lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>控制台输出：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">1</span><br><span class="line">4</span><br><span class="line">4</span><br><span class="line">40</span><br><span class="line">4</span><br><span class="line">8</span><br><span class="line">2</span><br><span class="line">24</span><br><span class="line">6</span><br><span class="line">Program ended with <span class="built_in">exit</span> code: 0</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -389,8 +407,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/21/JavaScript/" rel="next" title="JavaScript 笔记">
-                <i class="fa fa-chevron-left"></i> JavaScript 笔记
+              <a href="/2018/06/08/设计模式/" rel="next" title="设计模式">
+                <i class="fa fa-chevron-left"></i> 设计模式
               </a>
             
           </div>
@@ -398,6 +416,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/08/iOS界面卡顿及解决方案/" rel="prev" title="iOS 界面卡顿及解决方案">
+                iOS 界面卡顿及解决方案 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -446,8 +468,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -466,7 +497,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -496,6 +527,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理解"><span class="nav-number">2.</span> <span class="nav-text">理解</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -281,7 +281,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://crazystone.com/2018/06/05/python_os模块/">
+    <link itemprop="mainEntityOfPage" href="http://crazystone.com/2018/06/06/NSKeyedArchiver/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Crazy Stone">
@@ -300,8 +300,8 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/05/python_os模块/" itemprop="url">
-                  python os 模块
+                <a class="post-title-link" href="/2018/06/06/NSKeyedArchiver/" itemprop="url">
+                  NSKeyedArchiver
                 </a>
               
             
@@ -327,7 +327,7 @@
                 
               
 
-              <time title="创建时间：2018-06-05 22:32:01 / 修改时间：22:42:51" itemprop="dateCreated datePublished" datetime="2018-06-05T22:32:01+08:00">2018-06-05</time>
+              <time title="创建时间：2018-06-06 23:10:44 / 修改时间：23:16:55" itemprop="dateCreated datePublished" datetime="2018-06-06T23:10:44+08:00">2018-06-06</time>
             
 
             
@@ -366,11 +366,12 @@
 
       
         
-          <p>虽然进程可在单独的内存空间中执行，但除非这些Python进程在单独的处理器上执行，否则，实际并不是“同时”运行的。是由操作系统把处理器的时间片分配给一个进程，用完时间片后就需退出处理器等待另一个时间片的到来。</p>
-<p>另一种方式是在在程序中指定多个“执行线程”，让它们在相同的内存空间中工作。这称为“多线程处理”。线程比进程更有效，因为操作系统不必为每个线程创建单独的内存空间。新建进程用 <strong>os.fork</strong> 函数。但它只在 <strong>POSIX</strong> 系统上可用，在windows版的Python中，os模块没有定义 <strong>os.fork</strong> 函数。相反，windows程序员用多线程编程技术来完成并发任务。</p>
+          <h2 id="base64编码"><a href="#base64编码" class="headerlink" title="base64编码"></a>base64编码</h2><p>该编码使用64个明文来编码任意的二进制文件，它里面只使用了 A-Z, a-z, 0-9, +, / 这64个字符。（编码里面的“=”是填充字符）</p>
+<p>base64编码使加密算法更加简洁高效。</p>
+<h3 id="算法详解"><a href="#算法详解" class="headerlink" title="算法详解"></a>算法详解</h3><p>Base64编码要求把3个8位（bit）即1字节（byte）转化为4个6位的字节，之后在6位的前面补两个0，形成8位一个字节的形式。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/06/05/python_os模块/#more" rel="contents">
+            <a class="btn" href="/2018/06/06/NSKeyedArchiver/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -426,7 +427,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://crazystone.com/2018/06/05/python中的@修饰符/">
+    <link itemprop="mainEntityOfPage" href="http://crazystone.com/2018/06/06/AttributedString/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Crazy Stone">
@@ -445,8 +446,8 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/05/python中的@修饰符/" itemprop="url">
-                  python中的 @ 修饰符
+                <a class="post-title-link" href="/2018/06/06/AttributedString/" itemprop="url">
+                  AttributedString 使用
                 </a>
               
             
@@ -472,7 +473,7 @@
                 
               
 
-              <time title="创建时间：2018-06-05 22:28:17 / 修改时间：22:30:49" itemprop="dateCreated datePublished" datetime="2018-06-05T22:28:17+08:00">2018-06-05</time>
+              <time title="创建时间：2018-06-06 22:56:39 / 修改时间：23:02:14" itemprop="dateCreated datePublished" datetime="2018-06-06T22:56:39+08:00">2018-06-06</time>
             
 
             
@@ -512,12 +513,11 @@
       
         
           <blockquote>
-<p>@ 符号用作函数修饰符是python2.4新增加的功能，修饰符必须出现在函数定义前一行，不允许和函数定义在同一行。一个修饰符就是一个函数，它将被修饰的函数做为参数，并返回修饰后的同名函数或其它可调用的东西。</p>
+<p>AttributedString 可以分为 NSAttributedString 和 NSMutableAttributedString 两种。在使用中通过将 AttributedString 赋值给控件的 attributedText 属性来添加文字样式。控件包括UILabel、UITextField和UITextView等。</p>
 </blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f1</span><span class="params">(arg)</span>:</span></span><br><span class="line">    print(<span class="string">"function f1"</span>)</span><br><span class="line">    rl = arg()</span><br><span class="line">    print(rl)</span><br><span class="line">    <span class="keyword">return</span> rl + <span class="string">" f1 return"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这里 @ 符作符相当于 f1(f2())</span></span><br><span class="line"><span class="meta">@f1</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f2</span><span class="params">(arg=<span class="string">""</span>)</span>:</span></span><br><span class="line">    print(<span class="string">"function f2"</span>)</span><br><span class="line">    <span class="keyword">return</span> arg + <span class="string">"f2 return"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(<span class="string">"------"</span>)</span><br><span class="line">print(f2)</span><br><span class="line"><span class="comment"># Traceback --- TypeError: 'str' object is not callable</span></span><br><span class="line"><span class="comment"># 因为f1()中的rl = arg()没有参数</span></span><br><span class="line"><span class="comment"># print(f2("1"))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># output：</span></span><br><span class="line"><span class="comment"># function f1</span></span><br><span class="line"><span class="comment"># function f2</span></span><br><span class="line"><span class="comment"># f2 return</span></span><br><span class="line"><span class="comment"># ------</span></span><br><span class="line"><span class="comment"># f2 return f1 return</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/06/05/python中的@修饰符/#more" rel="contents">
+            <a class="btn" href="/2018/06/06/AttributedString/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -573,7 +573,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://crazystone.com/2018/06/05/Python_Decorators/">
+    <link itemprop="mainEntityOfPage" href="http://crazystone.com/2018/06/06/memcpy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Crazy Stone">
@@ -592,8 +592,8 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/05/Python_Decorators/" itemprop="url">
-                  DRY(Don't Repeat Yourself) Principles through Python Decorators
+                <a class="post-title-link" href="/2018/06/06/memcpy/" itemprop="url">
+                  memcpy函数 & 使用泛型指针交换任何类型数据
                 </a>
               
             
@@ -619,7 +619,7 @@
                 
               
 
-              <time title="创建时间：2018-06-05 22:21:22 / 修改时间：22:26:45" itemprop="dateCreated datePublished" datetime="2018-06-05T22:21:22+08:00">2018-06-05</time>
+              <time title="创建时间：2018-06-06 22:43:54 / 修改时间：22:52:41" itemprop="dateCreated datePublished" datetime="2018-06-06T22:43:54+08:00">2018-06-06</time>
             
 
             
@@ -658,19 +658,10 @@
 
       
         
-          <blockquote>
-<p>Python decorators are a powerful tool to remove redundancy. Along with modularizing functionality into appropriate bite-sized methods, it makes even the most complex workflows into concise functionality.</p>
-</blockquote>
-<p>For example, let’s look at the Django web framework, which handles requests by methods which receive a method object and return a response object:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle_request</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">"Hello, World"</span>)</span><br></pre></td></tr></table></figure>
-<p>A case I ran into recently was having to write several api methods which must:</p>
-<ul>
-<li>return json responses some must return an error code if it’s a GET</li>
-<li>request vs a POST</li>
-</ul>
+          <h2 id="memcpy函数源码"><a href="#memcpy函数源码" class="headerlink" title="memcpy函数源码"></a>memcpy函数源码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">memcpy</span><span class="params">(<span class="keyword">void</span> *dest,<span class="keyword">void</span> *src, <span class="keyword">unsigned</span> <span class="keyword">int</span> count)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (dest == src)</span><br><span class="line">        <span class="keyword">return</span> src;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span>* d = (<span class="keyword">char</span>*)dest;</span><br><span class="line">    <span class="keyword">char</span>* s = (<span class="keyword">char</span>*)src;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(count-- &gt; <span class="number">0</span>)</span><br><span class="line">        *d++ = *s++;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> dest;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/06/05/Python_Decorators/#more" rel="contents">
+            <a class="btn" href="/2018/06/06/memcpy/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -726,7 +717,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://crazystone.com/2018/06/05/db_triger/">
+    <link itemprop="mainEntityOfPage" href="http://crazystone.com/2018/06/05/单链表的实现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Crazy Stone">
@@ -745,8 +736,8 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/05/db_triger/" itemprop="url">
-                  数据库触发器before和after
+                <a class="post-title-link" href="/2018/06/05/单链表的实现/" itemprop="url">
+                  单链表的实现
                 </a>
               
             
@@ -772,7 +763,7 @@
                 
               
 
-              <time title="创建时间：2018-06-05 21:58:58 / 修改时间：22:00:42" itemprop="dateCreated datePublished" datetime="2018-06-05T21:58:58+08:00">2018-06-05</time>
+              <time title="创建时间：2018-06-05 23:55:08 / 修改时间：23:57:25" itemprop="dateCreated datePublished" datetime="2018-06-05T23:55:08+08:00">2018-06-05</time>
             
 
             
@@ -811,16 +802,16 @@
 
       
         
-          
-            <h2 id="before与after区别："><a href="#before与after区别：" class="headerlink" title="before与after区别："></a>before与after区别：</h2><blockquote>
-<p>before：(insert、update)可以对new进行修改，after不能对new进行修改，两者都不能修改old数据。（如果触发器使用after，而定义的触发器调用的函数使用new，就不会执行）<br>对于insert语句, 只有new是合法的；<br>对于delete语句，只有old才合法；<br>对于update语句，new、old可以同时使用。</p>
-<p>行级before触发器一般用于检查和修改将被插入和更新的数据；<br>行级after触发器一般用于将表中被更新的数据记录到其它的表中，或者检查与其它的表中的数据是否是一致的。</p>
-<p>before触发器的执行效率比after触发器高，在before触发器和after触发器都能被使用的情况下，应该选择before触发器。</p>
-<p>触发器在被调用时，系统会自动传递一些数据给它，这些数据包括触发触发器的事件类型（例如INSERT或UPDATE），对于行级触发器，还包括NEW数据行（对于INSERT和 UPDATE触发器）和OLD数据行（对于UPDATE和DELETE触发器）。每种可以用来书写触发器函数的语言都提供了取这些数据的方法。</p>
-<p>语句级别的触发器在执行过程中无法查看该语句插入、删除或更新的任何数据行。<br>还有一种特殊的触发器叫约束触发器，这种触发器的执行时间可以被命令SET CONSTRAINTS控制。</p>
+          <blockquote>
+<p>单链表是一种链式存取的数据结构，用一组地址任意的存储单元存放线性表中的数据元素。链表中的数据是以结点来表示的，每个结点的构成：元素(数据元素的映象) + 指针(指示后继元素存储位置)，元素就是存储数据的存储单元，指针就是连接每个结点的地址数据。</p>
 </blockquote>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/05/单链表的实现/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -872,7 +863,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://crazystone.com/2018/05/21/JavaScript/">
+    <link itemprop="mainEntityOfPage" href="http://crazystone.com/2018/06/05/链式哈希表的实现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Crazy Stone">
@@ -891,8 +882,8 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/21/JavaScript/" itemprop="url">
-                  JavaScript 笔记
+                <a class="post-title-link" href="/2018/06/05/链式哈希表的实现/" itemprop="url">
+                  链式哈希表的实现
                 </a>
               
             
@@ -918,7 +909,7 @@
                 
               
 
-              <time title="创建时间：2018-05-21 18:57:08 / 修改时间：19:05:46" itemprop="dateCreated datePublished" datetime="2018-05-21T18:57:08+08:00">2018-05-21</time>
+              <time title="创建时间：2018-06-05 23:50:59 / 修改时间：23:53:15" itemprop="dateCreated datePublished" datetime="2018-06-05T23:50:59+08:00">2018-06-05</time>
             
 
             
@@ -957,12 +948,10 @@
 
       
         
-          <blockquote>
-<p>JavaScript 是脚本语言<br>JavaScript 是一种轻量级的编程语言<br>JavaScript 是可插入 HTML 页面的编程代码<br>JavaScript 插入 HTML 页面后，可由所有的现代浏览器执行</p>
-</blockquote>
+          <p><strong>哈希算法一般用于快速查找和加密算法</strong></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/05/21/JavaScript/#more" rel="contents">
+            <a class="btn" href="/2018/06/05/链式哈希表的实现/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1007,7 +996,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1054,7 +1043,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
