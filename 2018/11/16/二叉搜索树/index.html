@@ -117,7 +117,7 @@
 <meta property="og:description" content="二叉搜索树介绍二叉搜索树是由二叉树组成的专用于查找和搜索目的的一种数据结构。 要在二叉搜索树中查询一个结点，从根结点开始一层一层往下查找，直到找到目标结点为止。当遇到一个比目标结点值大的结点时，顺着该结点的左子树继续查找。如果遇到的结点值小于目标结点，则顺着该结点的右子树继续查找。 二叉搜索树是一种用于查找操作的高效数据结构，因为在最坏的情况下，只需要查找一个分支上的数据就可以了，而不用检索每一个">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://abackslash.github.io/2018/11/16/二叉搜索树/avl_balance.png">
-<meta property="og:updated_time" content="2018-11-16T15:14:14.932Z">
+<meta property="og:updated_time" content="2018-11-16T16:05:16.766Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="二叉搜索树">
 <meta name="twitter:description" content="二叉搜索树介绍二叉搜索树是由二叉树组成的专用于查找和搜索目的的一种数据结构。 要在二叉搜索树中查询一个结点，从根结点开始一层一层往下查找，直到找到目标结点为止。当遇到一个比目标结点值大的结点时，顺着该结点的左子树继续查找。如果遇到的结点值小于目标结点，则顺着该结点的右子树继续查找。 二叉搜索树是一种用于查找操作的高效数据结构，因为在最坏的情况下，只需要查找一个分支上的数据就可以了，而不用检索每一个">
@@ -333,12 +333,24 @@
                 
               
 
-              <time title="创建时间：2018-11-16 21:14:28 / 修改时间：23:14:14" itemprop="dateCreated datePublished" datetime="2018-11-16T21:14:28+08:00">2018-11-16</time>
+              <time title="创建时间：2018-11-16 21:14:28" itemprop="dateCreated datePublished" datetime="2018-11-16T21:14:28+08:00">2018-11-16</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-11-17 00:05:16" itemprop="dateModified" datetime="2018-11-17T00:05:16+08:00">2018-11-17</time>
               
             
           </span>
@@ -399,8 +411,9 @@
 <a id="more"></a>
 <h2 id="二叉搜索树的实现与分析"><a href="#二叉搜索树的实现与分析" class="headerlink" title="二叉搜索树的实现与分析"></a>二叉搜索树的实现与分析</h2><p>将二叉搜索树实现为 AVL 树是保持一棵二叉搜索树平衡较好的方法。</p>
 <p>AVL树（Adel’son-Vel’skii and Landis）是一种特殊类型的二叉树，它的每个结点都保存一份额外的信息：结点的平衡因子。结点的平衡因子是它的左子树高度减去它的右子树高度的结果（见下图）。当插入结点时，AVL树需要自我调整，使得所有结点的平衡因子保持为+1、-1或0。当子树的根结点平衡因子为+1时，它是左倾斜的（left-heavy）。当子树的根结点平衡因子为-1时，它是右倾斜的（right-heavy）。一棵子树的根结点的平衡因子就代表该子树的平衡性。保持所有子树几乎都处于平衡状态，AVL树在总体上就能够基本保持平衡。</p>
-<img src="/2018/11/16/二叉搜索树/avl_balance.png" title="AVL">
+<img src="/2018/11/16/二叉搜索树/avl_balance.png" title="avl_balance">
 <p>当向AVL树中插入一个结点后，还有一些额外的工作要做。首先，必须计算因为执行了插入操作对平衡因子带来的改变。其次，如果任何平衡因子变为了±2，就必须从这个结点开始往下重新平衡这棵树，这个重新平衡的过程就称为旋转。</p>
+
 
       
     </div>
