@@ -289,6 +289,183 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2018/06/08/iOS界面卡顿及解决方案/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Crazy Stone">
+      <meta itemprop="description" content="step by step...">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="疯狂的石头">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/08/iOS界面卡顿及解决方案/" itemprop="url">
+                  iOS 界面卡顿及解决方案
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-08 21:28:12" itemprop="dateCreated datePublished" datetime="2018-06-08T21:28:12+08:00">2018-06-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-06-09 15:39:21" itemprop="dateModified" datetime="2018-06-09T15:39:21+08:00">2018-06-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><strong>卡顿一般是由于CPU或者GPU没有完成内容提交，以至于那一帧会被丢掉，等待下一次机会再显示，而这时显示屏会保留之前的内容不变。</strong></p>
+<h2 id="CPU相关"><a href="#CPU相关" class="headerlink" title="CPU相关"></a>CPU相关</h2><h3 id="对象创建"><a href="#对象创建" class="headerlink" title="对象创建"></a>对象创建</h3><p>对象的创建会分配内存、调整属性、甚至还有读取文件等操作，比较消耗CPU资源。尽量用轻量的对象代替重量的对象。比如 CALayer比UIView 要轻量许多，如果不需要响应事件，显然用 CALayer 更加合适。如果不涉及UI操作则尽量放到后台线程去创建。通过 Storyboard 创建视图对象时，其资源消耗会比直接通过代码创建对象要大很多。 </p>
+<p>尽量推迟对象创建时间，并把对象的创建分散到多个任务。如果对象可以复用，尽量这类对象放到缓冲池中。</p>
+<h3 id="对象调整"><a href="#对象调整" class="headerlink" title="对象调整"></a>对象调整</h3><p>对象的调整也很消耗CPU。比如对UIView的显示相关属性（frame、bounds、transform等）调整、视图层次调整。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/08/iOS界面卡顿及解决方案/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2018/06/08/sizeof操作符/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -985,182 +1162,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2018/06/08/NSCalendar/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Crazy Stone">
-      <meta itemprop="description" content="step by step...">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="疯狂的石头">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/08/NSCalendar/" itemprop="url">
-                  日历（NSCalendar）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-06-08 21:00:46" itemprop="dateCreated datePublished" datetime="2018-06-08T21:00:46+08:00">2018-06-08</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-06-09 15:39:52" itemprop="dateModified" datetime="2018-06-09T15:39:52+08:00">2018-06-09</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//日历</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">NSCalendarUnit</span> CalendarUnitYMD = <span class="built_in">NSCalendarUnitYear</span> | <span class="built_in">NSCalendarUnitMonth</span> | <span class="built_in">NSCalendarUnitDay</span>;</span><br><span class="line"><span class="built_in">NSCalendar</span> *calendar = [<span class="built_in">NSCalendar</span> currentCalendar];</span><br><span class="line"><span class="comment">//计算当月第一天</span></span><br><span class="line"><span class="built_in">NSDateComponents</span> *component = [calendar components:CalendarUnitYMD fromDate:[<span class="built_in">NSDate</span> date]];</span><br><span class="line">[component setTimeZone:[<span class="built_in">NSTimeZone</span> timeZoneWithName:<span class="string">@"UTC"</span>]];</span><br><span class="line">component.day = <span class="number">1</span>;</span><br><span class="line"><span class="built_in">NSDate</span> *currentDateFirstMonthDay = [calendar dateFromComponents:component];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, currentDateFirstMonthDay);</span><br><span class="line"></span><br><span class="line"><span class="comment">//计算当月最后一天</span></span><br><span class="line">component.month++;</span><br><span class="line">component.day = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, [calendar dateFromComponents:component]);</span><br><span class="line"></span><br><span class="line"><span class="comment">//计算相对日期</span></span><br><span class="line"><span class="built_in">NSDateComponents</span> *offsetComponent = [[<span class="built_in">NSDateComponents</span> alloc] init];</span><br><span class="line">offsetComponent.day = <span class="number">50</span>;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, [calendar dateByAddingComponents:offsetComponent toDate:currentDateFirstMonthDay options:<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">//日期对应的星期</span></span><br><span class="line"><span class="built_in">NSArray</span> *weekDaySymbols = [[[<span class="built_in">NSDateFormatter</span> alloc] init] shortWeekdaySymbols];</span><br><span class="line"><span class="built_in">NSDateComponents</span> *dateComponents = [calendar components:<span class="built_in">NSCalendarUnitWeekday</span> fromDate:currentDateFirstMonthDay];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, weekDaySymbols[dateComponents.weekday - <span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">//每个月的周数，iOS8以下使用NSWeekCalendarUnit代替NSCalendarUnitWeekOfMonth</span></span><br><span class="line"><span class="built_in">NSRange</span> rangeOfweeks = [calendar rangeOfUnit:<span class="built_in">NSCalendarUnitWeekOfMonth</span> inUnit:<span class="built_in">NSCalendarUnitMonth</span> forDate:currentDateFirstMonthDay];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, (<span class="keyword">long</span>)rangeOfweeks.length);</span><br><span class="line"></span><br><span class="line"><span class="comment">//计算日期间的天数，通过修改NSCalendarUnit可以间隔的月、年等等</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%ld"</span>, (<span class="keyword">long</span>)[calendar components:<span class="built_in">NSCalendarUnitDay</span> fromDate:currentDateFirstMonthDay toDate:[<span class="built_in">NSDate</span> date] options:<span class="number">0</span>].day);</span><br></pre></td></tr></table></figure>
-<p><strong>控制台输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2016-01-26 23:11:27.038 Test123[6502:707948] 2016-01-01 00:00:00 +0000</span><br><span class="line">2016-01-26 23:11:27.038 Test123[6502:707948] 2016-01-31 00:00:00 +0000</span><br><span class="line">2016-01-26 23:11:27.038 Test123[6502:707948] 2016-02-20 00:00:00 +0000</span><br><span class="line">2016-01-26 23:11:27.039 Test123[6502:707948] 周五</span><br><span class="line">2016-01-26 23:11:27.039 Test123[6502:707948] 6</span><br><span class="line">2016-01-26 23:11:27.040 Test123[6502:707948] 25</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1207,7 +1213,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

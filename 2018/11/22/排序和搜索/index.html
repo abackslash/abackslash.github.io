@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="排序和搜索排序算法分为两大类：比较排序和线性时间排序。比较排序依赖于比较和交换来将元素移动到正确的位置上。令人惊讶的是，并不是所有的排序算法都依赖于比较。对于那些确实依赖于比较来进行排序的算法来说，它们的运行时间往往不可能小于O(nlg n)。对于线性时间排序，从它的名字就可以看出，它的运行时间往往与它处理的数据元素个数成正比，即为O(n)。遗憾的是，线性时间排序依赖于数据集合中的某些特征，所以我">
+<meta name="keywords" content="iOS,Android,Python,React-Native,Java,PostgreSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排序和搜索">
+<meta property="og:url" content="https://abackslash.github.io/2018/11/22/排序和搜索/index.html">
+<meta property="og:site_name" content="疯狂的石头">
+<meta property="og:description" content="排序和搜索排序算法分为两大类：比较排序和线性时间排序。比较排序依赖于比较和交换来将元素移动到正确的位置上。令人惊讶的是，并不是所有的排序算法都依赖于比较。对于那些确实依赖于比较来进行排序的算法来说，它们的运行时间往往不可能小于O(nlg n)。对于线性时间排序，从它的名字就可以看出，它的运行时间往往与它处理的数据元素个数成正比，即为O(n)。遗憾的是，线性时间排序依赖于数据集合中的某些特征，所以我">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://abackslash.github.io/2018/11/22/排序和搜索/issort.png">
+<meta property="og:updated_time" content="2018-11-22T14:28:16.145Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="排序和搜索">
+<meta name="twitter:description" content="排序和搜索排序算法分为两大类：比较排序和线性时间排序。比较排序依赖于比较和交换来将元素移动到正确的位置上。令人惊讶的是，并不是所有的排序算法都依赖于比较。对于那些确实依赖于比较来进行排序的算法来说，它们的运行时间往往不可能小于O(nlg n)。对于线性时间排序，从它的名字就可以看出，它的运行时间往往与它处理的数据元素个数成正比，即为O(n)。遗憾的是，线性时间排序依赖于数据集合中的某些特征，所以我">
+<meta name="twitter:image" content="https://abackslash.github.io/2018/11/22/排序和搜索/issort.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://abackslash.github.io/2018/11/22/排序和搜索/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>排序和搜索 | 疯狂的石头</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">疯狂的石头</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2018/11/22/排序和搜索/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Crazy Stone">
+      <meta itemprop="description" content="step by step...">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="疯狂的石头">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">排序和搜索
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-11-22 20:31:02 / 修改时间：22:28:16" itemprop="dateCreated datePublished" datetime="2018-11-22T20:31:02+08:00">2018-11-22</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="排序和搜索"><a href="#排序和搜索" class="headerlink" title="排序和搜索"></a>排序和搜索</h2><p>排序算法分为两大类：比较排序和线性时间排序。比较排序依赖于比较和交换来将元素移动到正确的位置上。令人惊讶的是，并不是所有的排序算法都依赖于比较。对于那些确实依赖于比较来进行排序的算法来说，它们的运行时间往往不可能小于O(nlg n)。对于线性时间排序，从它的名字就可以看出，它的运行时间往往与它处理的数据元素个数成正比，即为O(n)。遗憾的是，线性时间排序依赖于数据集合中的某些特征，所以我们并不是在所有的场合都能够使用它。某些排序算法只使用数据本身的存储空间来处理和输出数据（这些称为就地排序），而有一些则需要额外的空间来处理和输出数据（虽然可能最终结果还是会拷贝到原始的内存空间中）。</p>
+<p>搜索就是在一个数据集中找到一个元素的位置，它可用于任何任务中。一种最简单的、不需要费任何脑筋的搜索方法是：简单地从数据集的一端查找到另一端。这就是所谓的线性搜索。通常，线性搜索用在那些对随机访问支持得不太好的数据结构中，例如：链表。另一种方法是使用二分查找，这会在本章中介绍。还有一些搜索方法专门用于特定的数据结构，例如哈希表和二叉树。</p>
+<h3 id="插入排序（Insertion-sort）"><a href="#插入排序（Insertion-sort）" class="headerlink" title="插入排序（Insertion sort）"></a>插入排序（Insertion sort）</h3><p>插入排序虽然不是最有效的排序方法，但它简单，并且不需要额外的存储空间。其最佳应用场景是对一个小的数据集合进行递增排序。</p>
+<p>插入排序每次从无序数据集中取出一个元素，扫描已排好序的数据集，并将它插入有序集合合适的位置上。虽然乍一看，插入排序需要独立为有序和无序的元素集合预留足够的存储空间，但实际上它是不需要额外的存储空间的。</p>
+<p>插入排序是一种较为简单的算法，但是它在处理大型数据集时并不高效。因为很明显，在决定将元素插入哪个位置之前，需要将被插入元素和有序数据集中的其他元素进行比较，这会随着数据集的增大而增加额外的开销。然而插入排序的优点是，当将元素插入一个有序数据集中时，只需要对有序数据集最多进行一次遍历，而不需要完整地运行算法。这个特性使得插入排序在增量排序中非常高效。</p>
+<h4 id="插入排序的分析"><a href="#插入排序的分析" class="headerlink" title="插入排序的分析"></a>插入排序的分析</h4><a id="more"></a>
+<p>插入排序使用一个嵌套循环来解决问题。外部循环用标号j来控制元素，使元素从无序数据集中插入有序数据集中。由于待插入的元素总是会被插入有序数据集的右边，因此也可以认为j是data中分隔有序元素集和无序元素集的界线。对于每个处于位置j的元素，都会使用变量i来向后查找元素将要放置的位置。当向后查找数据时，每个处于位置i的元素都要向右移动一位，以保证预留出足够的空间来插入新元素。一旦j到达无序数据集的尾部，data就是一个有序数据集了。</p>
+<img src="/2018/11/22/排序和搜索/issort.png" title="issort">
+<p>插入排序的时间复杂度关键在于它的嵌套循环部分。考虑到这一点，外部循环运行时间T（n）=n-1，乘以一段固定时间，其中n为要排序元素的个数。考虑内部循环运行在最坏的情况，假设在插入元素之前，必须从右到左遍历完所有的元素。这样的话，内部循环对于第一个元素迭代一次，对于第二个元素迭代二次，以此类推，直到外循环终止。嵌套循环的运行时间表示为从1到n-1数据的和，即运行时间T（n）=（n（n+1）/2-n，乘以一段固定时间。（这是由1到n的著名求和公式推导出来。）用O表示法可以简化为O（n2）。当在递增排序中使用插入排序时，其时间复杂度为O（n）。插入排序不需要额外的空间，因此它只使用无序数据本身的存储空间即可。</p>
+<h4 id="插入排序的实现"><a href="#插入排序的实现" class="headerlink" title="插入排序的实现"></a>插入排序的实现</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">issort</span><span class="params">(<span class="keyword">void</span> *data, <span class="keyword">int</span> size, <span class="keyword">int</span> esize,</span></span></span><br><span class="line">           int (*compare)(const void *key1, const void *key2)) &#123;</span><br><span class="line">    <span class="keyword">char</span> *a = data;</span><br><span class="line">    <span class="keyword">void</span> *key;</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> ((key = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>(esize)) == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (j = <span class="number">1</span>; j &lt; size; j++) &#123;</span><br><span class="line">        <span class="built_in">memcpy</span>(key, &amp;a[j * esize], esize);</span><br><span class="line">        i = j - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &gt;= <span class="number">0</span> &amp;&amp; compare(&amp;a[i * esize], key) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">memcpy</span>(&amp;a[(i + <span class="number">1</span>) * esize], &amp;a[i * esize], esize);</span><br><span class="line">            i--;  </span><br><span class="line">        &#125; </span><br><span class="line">        <span class="built_in">memcpy</span>(&amp;a[(i + <span class="number">1</span>) * esize], key, esize);  </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">free</span>(key);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print_idata</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> *<span class="built_in">array</span>, <span class="keyword">int</span> size)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++)</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>, <span class="string">" %d"</span>, <span class="built_in">array</span>[i]);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>, <span class="string">"\n"</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">compare_int</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span> *int1, <span class="keyword">const</span> <span class="keyword">void</span> *int2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (*(<span class="keyword">const</span> <span class="keyword">int</span> *)int1 &gt; *(<span class="keyword">const</span> <span class="keyword">int</span> *)int2)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (*(<span class="keyword">const</span> <span class="keyword">int</span> *)int1 &lt; *(<span class="keyword">const</span> <span class="keyword">int</span> *)int2)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> iarray[<span class="number">10</span>] = &#123;<span class="number">0</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">4</span>, <span class="number">6</span>&#125;;    </span><br><span class="line">    <span class="keyword">int</span> size = <span class="number">10</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>, <span class="string">"Before issort\n"</span>);</span><br><span class="line">    print_idata(iarray, size);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (issort(iarray, size, <span class="keyword">sizeof</span>(<span class="keyword">int</span>), compare_int) != <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>, <span class="string">"After issort\n"</span>);</span><br><span class="line">    print_idata(iarray, size);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>控制台输出</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Before issort</span><br><span class="line"> 0 5 1 7 3 2 8 9 4 6</span><br><span class="line">After issort</span><br><span class="line"> 0 1 2 3 4 5 6 7 8 9</span><br></pre></td></tr></table></figure>
+<h3 id="快速排序（Quick-sort）"><a href="#快速排序（Quick-sort）" class="headerlink" title="快速排序（Quick sort）"></a>快速排序（Quick sort）</h3><p>在一般情况下，一致认为快速排序是最好的一种排序算法，而且不需要额外的存储空间。其最佳应用场合是应用于大型数据集。</p>
+<h3 id="归并排序（Merge-sort）"><a href="#归并排序（Merge-sort）" class="headerlink" title="归并排序（Merge sort）"></a>归并排序（Merge sort）</h3><p>归并排序基本上与快速排序算法的性能相同，但它需要使用两倍于快速排序的存储空间。而具有讽刺意味的是，其最佳应用场景是在超大数据集中，因为归并排序的原理就是对原始的乱序数据不断进行对半分割。</p>
+<h3 id="计数排序（Counting-sort）"><a href="#计数排序（Counting-sort）" class="headerlink" title="计数排序（Counting sort）"></a>计数排序（Counting sort）</h3><p>计数排序是一种稳定的线形时间排序算法，当知道数据集中整数的最大值的情况下会经常用到此算法。它主要用来实现基数排序。</p>
+<h3 id="基数排序（Radix-sort）"><a href="#基数排序（Radix-sort）" class="headerlink" title="基数排序（Radix sort）"></a>基数排序（Radix sort）</h3><p>基数排序是逐位对元素进行排序的线性时间排序算法。基数排序适用于固定大小的元素集，并且其中的元素易于分割，且易于用整数表示。</p>
+<h3 id="二分查找（Binary-search）"><a href="#二分查找（Binary-search）" class="headerlink" title="二分查找（Binary search）"></a>二分查找（Binary search）</h3><p>在一个不期望频繁地进行插入和删除操作的有序数据集中，使用二分查找非常高效。因为通常排序的代价大于搜索的代价。当数据集不变时，二分搜索的应用效果最佳。</p>
+<h2 id="排序和搜索算法的一些应用"><a href="#排序和搜索算法的一些应用" class="headerlink" title="排序和搜索算法的一些应用"></a>排序和搜索算法的一些应用</h2><h3 id="次序统计"><a href="#次序统计" class="headerlink" title="次序统计"></a>次序统计</h3><p>寻找集合中第i小的元素。一个简单的方法就是，一旦数据集排好序，取出第i个元素即可。</p>
+<h3 id="二分搜索"><a href="#二分搜索" class="headerlink" title="二分搜索"></a>二分搜索</h3><p>一种有效的查找方法，它依赖于有序数据集。二分搜索不断地将数据集从中分段，并检查每段中心位置的元素，从而最终找到目标元素。</p>
+<h3 id="目录列表"><a href="#目录列表" class="headerlink" title="目录列表"></a>目录列表</h3><p>有组织地列出文件系统中的文件。通常来说，操作系统在显示目录列表之前会以某种方式将文件排序。</p>
+<h3 id="数据库系统"><a href="#数据库系统" class="headerlink" title="数据库系统"></a>数据库系统</h3><p>通常，大型系统包含海量的数据，并且这些数据要求快速地存取。一般情况下，在存储数据的数据库中使用一些高效而灵活的方法来查找数据是至关重要的。</p>
+<h3 id="拼写查检器"><a href="#拼写查检器" class="headerlink" title="拼写查检器"></a>拼写查检器</h3><p>这是一种查检文本中单词拼写正确与否的程序。它通常以单词为单位在字典中进行对比校验。由于拼写检查器会频繁地在包含数以万计的文本中寻找单词并检查，因此它必须能够快速而高效地查询到可接受的单词。</p>
+<h3 id="电子表格"><a href="#电子表格" class="headerlink" title="电子表格"></a>电子表格</h3><p>它是大多数企业的一个重要组成部分，企业用电子表格来管理库存和财务数据。当对表格中的数据分类和排序后，其数据才会更有意义。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/18/堆和优先队列/" rel="next" title="堆和优先队列">
+                <i class="fa fa-chevron-left"></i> 堆和优先队列
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Crazy Stone" />
+            
+              <p class="site-author-name" itemprop="name">Crazy Stone</p>
+              <p class="site-description motion-element" itemprop="description">step by step...</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:dll1885@icloud.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/abackslash" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#排序和搜索"><span class="nav-number">1.</span> <span class="nav-text">排序和搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#插入排序（Insertion-sort）"><span class="nav-number">1.1.</span> <span class="nav-text">插入排序（Insertion sort）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#插入排序的分析"><span class="nav-number">1.1.1.</span> <span class="nav-text">插入排序的分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入排序的实现"><span class="nav-number">1.1.2.</span> <span class="nav-text">插入排序的实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序（Quick-sort）"><span class="nav-number">1.2.</span> <span class="nav-text">快速排序（Quick sort）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归并排序（Merge-sort）"><span class="nav-number">1.3.</span> <span class="nav-text">归并排序（Merge sort）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计数排序（Counting-sort）"><span class="nav-number">1.4.</span> <span class="nav-text">计数排序（Counting sort）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基数排序（Radix-sort）"><span class="nav-number">1.5.</span> <span class="nav-text">基数排序（Radix sort）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二分查找（Binary-search）"><span class="nav-number">1.6.</span> <span class="nav-text">二分查找（Binary search）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排序和搜索算法的一些应用"><span class="nav-number">2.</span> <span class="nav-text">排序和搜索算法的一些应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#次序统计"><span class="nav-number">2.1.</span> <span class="nav-text">次序统计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二分搜索"><span class="nav-number">2.2.</span> <span class="nav-text">二分搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目录列表"><span class="nav-number">2.3.</span> <span class="nav-text">目录列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库系统"><span class="nav-number">2.4.</span> <span class="nav-text">数据库系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拼写查检器"><span class="nav-number">2.5.</span> <span class="nav-text">拼写查检器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电子表格"><span class="nav-number">2.6.</span> <span class="nav-text">电子表格</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Crazy Stone</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

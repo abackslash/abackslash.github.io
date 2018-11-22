@@ -289,6 +289,173 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2018/11/22/排序和搜索/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Crazy Stone">
+      <meta itemprop="description" content="step by step...">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="疯狂的石头">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/22/排序和搜索/" itemprop="url">
+                  排序和搜索
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-11-22 20:31:02 / 修改时间：22:28:16" itemprop="dateCreated datePublished" datetime="2018-11-22T20:31:02+08:00">2018-11-22</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="排序和搜索"><a href="#排序和搜索" class="headerlink" title="排序和搜索"></a>排序和搜索</h2><p>排序算法分为两大类：比较排序和线性时间排序。比较排序依赖于比较和交换来将元素移动到正确的位置上。令人惊讶的是，并不是所有的排序算法都依赖于比较。对于那些确实依赖于比较来进行排序的算法来说，它们的运行时间往往不可能小于O(nlg n)。对于线性时间排序，从它的名字就可以看出，它的运行时间往往与它处理的数据元素个数成正比，即为O(n)。遗憾的是，线性时间排序依赖于数据集合中的某些特征，所以我们并不是在所有的场合都能够使用它。某些排序算法只使用数据本身的存储空间来处理和输出数据（这些称为就地排序），而有一些则需要额外的空间来处理和输出数据（虽然可能最终结果还是会拷贝到原始的内存空间中）。</p>
+<p>搜索就是在一个数据集中找到一个元素的位置，它可用于任何任务中。一种最简单的、不需要费任何脑筋的搜索方法是：简单地从数据集的一端查找到另一端。这就是所谓的线性搜索。通常，线性搜索用在那些对随机访问支持得不太好的数据结构中，例如：链表。另一种方法是使用二分查找，这会在本章中介绍。还有一些搜索方法专门用于特定的数据结构，例如哈希表和二叉树。</p>
+<h3 id="插入排序（Insertion-sort）"><a href="#插入排序（Insertion-sort）" class="headerlink" title="插入排序（Insertion sort）"></a>插入排序（Insertion sort）</h3><p>插入排序虽然不是最有效的排序方法，但它简单，并且不需要额外的存储空间。其最佳应用场景是对一个小的数据集合进行递增排序。</p>
+<p>插入排序每次从无序数据集中取出一个元素，扫描已排好序的数据集，并将它插入有序集合合适的位置上。虽然乍一看，插入排序需要独立为有序和无序的元素集合预留足够的存储空间，但实际上它是不需要额外的存储空间的。</p>
+<p>插入排序是一种较为简单的算法，但是它在处理大型数据集时并不高效。因为很明显，在决定将元素插入哪个位置之前，需要将被插入元素和有序数据集中的其他元素进行比较，这会随着数据集的增大而增加额外的开销。然而插入排序的优点是，当将元素插入一个有序数据集中时，只需要对有序数据集最多进行一次遍历，而不需要完整地运行算法。这个特性使得插入排序在增量排序中非常高效。</p>
+<h4 id="插入排序的分析"><a href="#插入排序的分析" class="headerlink" title="插入排序的分析"></a>插入排序的分析</h4>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/11/22/排序和搜索/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2018/11/18/堆和优先队列/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -998,188 +1165,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2018/06/08/iOS界面卡顿及解决方案/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Crazy Stone">
-      <meta itemprop="description" content="step by step...">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="疯狂的石头">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/08/iOS界面卡顿及解决方案/" itemprop="url">
-                  iOS 界面卡顿及解决方案
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-06-08 21:28:12" itemprop="dateCreated datePublished" datetime="2018-06-08T21:28:12+08:00">2018-06-08</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-06-09 15:39:21" itemprop="dateModified" datetime="2018-06-09T15:39:21+08:00">2018-06-09</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><strong>卡顿一般是由于CPU或者GPU没有完成内容提交，以至于那一帧会被丢掉，等待下一次机会再显示，而这时显示屏会保留之前的内容不变。</strong></p>
-<h2 id="CPU相关"><a href="#CPU相关" class="headerlink" title="CPU相关"></a>CPU相关</h2><h3 id="对象创建"><a href="#对象创建" class="headerlink" title="对象创建"></a>对象创建</h3><p>对象的创建会分配内存、调整属性、甚至还有读取文件等操作，比较消耗CPU资源。尽量用轻量的对象代替重量的对象。比如 CALayer比UIView 要轻量许多，如果不需要响应事件，显然用 CALayer 更加合适。如果不涉及UI操作则尽量放到后台线程去创建。通过 Storyboard 创建视图对象时，其资源消耗会比直接通过代码创建对象要大很多。 </p>
-<p>尽量推迟对象创建时间，并把对象的创建分散到多个任务。如果对象可以复用，尽量这类对象放到缓冲池中。</p>
-<h3 id="对象调整"><a href="#对象调整" class="headerlink" title="对象调整"></a>对象调整</h3><p>对象的调整也很消耗CPU。比如对UIView的显示相关属性（frame、bounds、transform等）调整、视图层次调整。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/08/iOS界面卡顿及解决方案/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1226,7 +1216,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
