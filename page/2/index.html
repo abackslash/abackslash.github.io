@@ -289,6 +289,190 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2018/06/08/frame_bounds_center/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Crazy Stone">
+      <meta itemprop="description" content="step by step...">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="疯狂的石头">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/08/frame_bounds_center/" itemprop="url">
+                  frame、bounds和center
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-08 21:56:18" itemprop="dateCreated datePublished" datetime="2018-06-08T21:56:18+08:00">2018-06-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-06-09 15:36:58" itemprop="dateModified" datetime="2018-06-09T15:36:58+08:00">2018-06-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>frame：该view在父view坐标系统中的位置和大小</strong></p>
+<p><strong>bounds：该view在本身坐标系统中的位置和大小</strong></p>
+<p><strong>center：该view的中心点在父view坐标系统中的位置和大小</strong></p>
+<p>其实本地坐标系统的关键就是要知道他的原点(0, 0)在什么位置（这个位置是相对于上层view的本地坐标系统而言的，最上层view就是window，他的本地坐标系统原点就是屏幕的左上角了）。 </p>
+<p>通过修改view的bounds属性可以修改本地坐标系统的原点位置，进而影响到“子view”的显示位置。</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIView</span> *viewA = [[<span class="built_in">UIView</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">20</span>, <span class="number">20</span>, <span class="number">200</span>, <span class="number">200</span>)];</span><br><span class="line">[viewA setBounds:<span class="built_in">CGRectMake</span>(<span class="number">-30</span>, <span class="number">-30</span>, <span class="number">200</span>, <span class="number">200</span>)];</span><br><span class="line">viewA.backgroundColor = [<span class="built_in">UIColor</span> redColor];</span><br><span class="line">[<span class="keyword">self</span>.view addSubview:viewA];</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIView</span> *viewB = [[<span class="built_in">UIView</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">-10</span>, <span class="number">-10</span>, <span class="number">100</span>, <span class="number">100</span>)];</span><br><span class="line">viewB.backgroundColor = [<span class="built_in">UIColor</span> yellowColor];</span><br><span class="line">[viewA addSubview:viewB];</span><br></pre></td></tr></table></figure>
+<p>以上代码运行效果：</p>
+<img src="/2018/06/08/frame_bounds_center/bounds.png" title="bounds">
+<p><strong>bounds和frame的值：</strong></p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">viewA.frame:&#123;&#123;<span class="number">20</span>, <span class="number">20</span>&#125;, &#123;<span class="number">200</span>, <span class="number">200</span>&#125;&#125;, viewA.bounds:&#123;&#123;<span class="number">-30</span>, <span class="number">-30</span>&#125;, &#123;<span class="number">200</span>, <span class="number">200</span>&#125;&#125;</span><br><span class="line">viewB.frame:&#123;&#123;<span class="number">-10</span>, <span class="number">-10</span>&#125;, &#123;<span class="number">100</span>, <span class="number">100</span>&#125;&#125;, viewB.bounds:&#123;&#123;<span class="number">0</span>, <span class="number">0</span>&#125;, &#123;<span class="number">100</span>, <span class="number">100</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>[viewA setBounds:CGRectMake(-30, -30, 200, 200)]</strong><br><strong>修改为：</strong><br><strong>[viewA setBounds:CGRectMake(-30, -30, 245, 245)]</strong><br><strong>运行效果：</strong></p>
+<img src="/2018/06/08/frame_bounds_center/boundschanged.png" title="boundschanged">
+<p><strong>bounds和frame的值：</strong></p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">viewA.frame:&#123;&#123;<span class="number">-2.5</span>, <span class="number">-2.5</span>&#125;, &#123;<span class="number">245</span>, <span class="number">245</span>&#125;&#125;, viewA.bounds:&#123;&#123;<span class="number">-30</span>, <span class="number">-30</span>&#125;, &#123;<span class="number">245</span>, <span class="number">245</span>&#125;&#125;</span><br><span class="line">viewB.frame:&#123;&#123;<span class="number">-10</span>, <span class="number">-10</span>&#125;, &#123;<span class="number">100</span>, <span class="number">100</span>&#125;&#125;, viewB.bounds:&#123;&#123;<span class="number">0</span>, <span class="number">0</span>&#125;, &#123;<span class="number">100</span>, <span class="number">100</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>bounds可以通过修改自己坐标系原点的位置来影响“子view”的显示位置。<br>bounds可以改变frame，如果bounds比frame大，那么frame也会随之变大。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2018/06/08/iOS界面卡顿及解决方案/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -993,175 +1177,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2018/06/08/gitFlow/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Crazy Stone">
-      <meta itemprop="description" content="step by step...">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="疯狂的石头">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/08/gitFlow/" itemprop="url">
-                  git flow
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-06-08 21:07:14" itemprop="dateCreated datePublished" datetime="2018-06-08T21:07:14+08:00">2018-06-08</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-06-09 15:37:39" itemprop="dateModified" datetime="2018-06-09T15:37:39+08:00">2018-06-09</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/随笔/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="git-flow-流程："><a href="#git-flow-流程：" class="headerlink" title="git flow 流程："></a>git flow 流程：</h2><img src="/2018/06/08/gitFlow/gitflow.png" title="flow">
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1213,7 +1228,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
