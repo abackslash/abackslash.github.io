@@ -116,10 +116,12 @@
 <meta property="og:site_name" content="疯狂的石头">
 <meta property="og:description" content="描述一种最古老而最优雅的数据压缩方法之一就是霍夫曼编码，它是一种基于最小冗余编码的压缩算法。最小冗余编码是指，如果知道一组数据中符号出现的频率，就可以用一种特殊的方式来表示符号从而减少数据需要的存储空间。其方法是，使用较少的位对出现频率高的符号编码，用较多的位对出现频率低的符号编码。我们要意识到，一个符号不一定必须是文本字符，它可以是任何大小的数据，但往往它只占一个字节。 熵和最小冗余每个数据集都">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-10T15:03:54.214Z">
+<meta property="og:image" content="https://abackslash.github.io/2018/12/09/霍夫曼编码/build_huffman_tree.png">
+<meta property="og:updated_time" content="2018-12-11T14:46:37.955Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="霍夫曼编码">
 <meta name="twitter:description" content="描述一种最古老而最优雅的数据压缩方法之一就是霍夫曼编码，它是一种基于最小冗余编码的压缩算法。最小冗余编码是指，如果知道一组数据中符号出现的频率，就可以用一种特殊的方式来表示符号从而减少数据需要的存储空间。其方法是，使用较少的位对出现频率高的符号编码，用较多的位对出现频率低的符号编码。我们要意识到，一个符号不一定必须是文本字符，它可以是任何大小的数据，但往往它只占一个字节。 熵和最小冗余每个数据集都">
+<meta name="twitter:image" content="https://abackslash.github.io/2018/12/09/霍夫曼编码/build_huffman_tree.png">
 
 
 
@@ -348,7 +350,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-12-10 23:03:54" itemprop="dateModified" datetime="2018-12-10T23:03:54+08:00">2018-12-10</time>
+                <time title="修改时间：2018-12-11 22:46:37" itemprop="dateModified" datetime="2018-12-11T22:46:37+08:00">2018-12-11</time>
               
             
           </span>
@@ -407,6 +409,9 @@
 <a id="more"></a>
 <p>这意味着，如果用超过两位的数来表示z将是一种浪费。如果在一般情况下用一个字节（即8位）来表示一个符号，那么在这种情况下使用压缩算法可以大幅减小数据的容量。</p>
 <p>下表表示如何计算一个有72个数据实例（其中有5个不同的符号）熵的例子。首先要将每个字符的熵相加。以”U”为例，字符的熵的计算方法如下。因为”U”出现12次，所以每个”U”的实例的熵计算如下：</p>
+<p><strong><em>-lg(12/72) = 2.584963位</em></strong></p>
+<p>由于”U”在数据中出现了12次，因此整个数据的熵为：</p>
+<p><strong><em>2.584963 × 12 = 31.01955位</em></strong></p>
 <table>
 <thead>
 <tr>
@@ -453,6 +458,18 @@
 <p><strong><em>31.01955 + 36.00000 + 23.53799 + 33.94552 + 36.95994= 161.46300位</em></strong></p>
 <p>如果使用8位来表示每个符号，需要72×8=576位的空间，所以理论上来说，可以最多将此数据压缩：（1减去压缩数据大小除以原始数据大小的值为数据的压缩率）</p>
 <p><strong><em>1 -（161.463000 / 576）=72.0%</em></strong></p>
+<h3 id="构造霍夫曼树"><a href="#构造霍夫曼树" class="headerlink" title="构造霍夫曼树"></a>构造霍夫曼树</h3><p>霍夫曼编码展现了一种基于熵的数据近似的最佳表现形式。它首先生成一个称为霍夫曼树的数据结构，霍夫曼树本身是一棵二叉树，用它来生成霍夫曼编码。霍夫曼编码是用来表示数据集合中符号的编码，用这种编码方式达到数据压缩的目的。然而，霍夫曼编码的压缩结果往往只能接近数据的熵，因为符号的熵常常是有小数位的。而在实际中，因为霍夫曼编码所用的位数不可能有小数位，所以有些代码会超过实际最优的代码位数。</p>
+<p>下图展示了构建一棵霍夫曼树的过程。构建的过程往往从叶子结点向上进行。首先，将每个符号和频率放到它自身的树中（见下图，步骤1）。然后，将两个频率最小的根结点的树合并，并将其频率之和存放到树的新根结点中（见下图，步骤2）。这个过程反复持续下去，直到最后只剩下一棵树（这棵树就是霍夫曼树，见下图，步骤5）。霍夫曼树的根结点包含数据中符号的总个数，它的叶子结点包含原始的符号和符号的频率。由于霍夫曼编码就是在不断寻找两棵最适合合并的树，因此它是贪婪算法的一个很好的例子。</p>
+<img src="/2018/12/09/霍夫曼编码/build_huffman_tree.png" title="build_huffman_tree">
+<h3 id="压缩和解压缩数据"><a href="#压缩和解压缩数据" class="headerlink" title="压缩和解压缩数据"></a>压缩和解压缩数据</h3><p>建立一棵霍夫曼数是数据压缩和解压缩的一部分。用霍夫曼树压缩数据，给定一个具体的符号，从树的根开始，然后沿着符号的叶向叶子结点追踪。在向下追踪的过程中，当向左分支移动时，向当前编码末尾追加0；当向右移动时，向当前编码末尾追加1。所以，在上图中，为了确定”U”的霍曼夫编码，首先向右移动（1），然后向左（10），然后再向右（101）。上图中符号的霍夫曼编码为：</p>
+<p><strong><em>U=101, V=01, W=100, X=00, Y=11</em></strong></p>
+<p>要解压缩用霍夫曼树编码的数据，要一位一位地读取压缩数据。从树的根开始，当在数据中遇到0时，向树的左分支移动；当遇到1时，向右分支移动。一旦到达一个叶子结点，就找到了符号。接着从头开始，重复上述过程，直到所有的压缩数据都确定。用这种方法来解压缩数据是可能的，这是因为霍夫曼编码是无前缀的（prefix free）。无前缀指一组代码中的任何一个编码都不是另一个编码的前缀。这就保证了编码被解码时不会有多义性。例如，”V”的编码是01，01不会是任何其他编码的前缀。因此，只要在压缩数据中碰到了01，就可以确定它表示的是符号”V”。</p>
+<h3 id="霍夫曼编码的效率"><a href="#霍夫曼编码的效率" class="headerlink" title="霍夫曼编码的效率"></a>霍夫曼编码的效率</h3><p>为了确定霍夫曼编码降低了多大容量的存储空间，首先要计算每个符号的频率与其编码位数的乘积，然后将其求和。所以，压缩后的数据的大小为：</p>
+<p><strong><em>12×3 + 18×2 + 7×3 + 15×2 + 20×2 = 163位</em></strong></p>
+<p>假设不使用压缩算法的72个字符均用8位来表示，那么其总共所占的数据大小为576位，所以其压缩比计算如下：</p>
+<p><strong><em>1 - (163/576) = 71.7%</em></strong></p>
+<p>要再次强调的是，在实际中无法用小数位来表示霍夫曼编码，所以在很多情况下这个压缩比并没有数据的熵效果那么好。但它也非常接近于最佳压缩比。</p>
+<p>在通常情况下，霍夫曼编码并不是最高效的压缩方法，但它压缩和解压缩的速度非常快。一般来说，造成霍夫曼编码比较耗时的原因是它需要扫描两次数据：一次用来计算频率；另一次才是用来压缩数据。而解压缩数据非常高效，因为解码每个符号的位序列只需要扫描一次霍夫曼树。</p>
 
       
     </div>
@@ -649,7 +666,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#描述"><span class="nav-number">1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#熵和最小冗余"><span class="nav-number">2.</span> <span class="nav-text">熵和最小冗余</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#描述"><span class="nav-number">1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#熵和最小冗余"><span class="nav-number">2.</span> <span class="nav-text">熵和最小冗余</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构造霍夫曼树"><span class="nav-number">3.</span> <span class="nav-text">构造霍夫曼树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#压缩和解压缩数据"><span class="nav-number">4.</span> <span class="nav-text">压缩和解压缩数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#霍夫曼编码的效率"><span class="nav-number">5.</span> <span class="nav-text">霍夫曼编码的效率</span></a></li></ol></div>
             
 
           </div>
