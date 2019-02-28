@@ -108,25 +108,27 @@
 
 
 
-  <meta name="description" content="虽然进程可在单独的内存空间中执行，但除非这些Python进程在单独的处理器上执行，否则，实际并不是“同时”运行的。是由操作系统把处理器的时间片分配给一个进程，用完时间片后就需退出处理器等待另一个时间片的到来。 另一种方式是在在程序中指定多个“执行线程”，让它们在相同的内存空间中工作。这称为“多线程处理”。线程比进程更有效，因为操作系统不必为每个线程创建单独的内存空间。新建进程用 os.fork 函">
+  <meta name="description" content="任何一种网站的功能只是前端（front end）或者视图（view）访问相应的模型（model）获取数据的一种方式。任何情况下，总会有模型和视图，真正改变的是模型和视图的连接方式。连接方式主要有两种：Controller 和 ViewModel，每种连接方式都有自己的优缺点。 MVC: Model-View-ControllerMVC模式最初生根于服务器端的Web开发，后来渐渐能够胜任客户端Web">
 <meta name="keywords" content="iOS,Android,Python,React-Native,Java,PostgreSQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python os 模块">
-<meta property="og:url" content="https://abackslash.github.io/2018/06/05/python_os模块/index.html">
+<meta property="og:title" content="MVC vs MVVM">
+<meta property="og:url" content="https://abackslash.github.io/2016/06/04/mvc_mvvm/index.html">
 <meta property="og:site_name" content="疯狂的石头">
-<meta property="og:description" content="虽然进程可在单独的内存空间中执行，但除非这些Python进程在单独的处理器上执行，否则，实际并不是“同时”运行的。是由操作系统把处理器的时间片分配给一个进程，用完时间片后就需退出处理器等待另一个时间片的到来。 另一种方式是在在程序中指定多个“执行线程”，让它们在相同的内存空间中工作。这称为“多线程处理”。线程比进程更有效，因为操作系统不必为每个线程创建单独的内存空间。新建进程用 os.fork 函">
+<meta property="og:description" content="任何一种网站的功能只是前端（front end）或者视图（view）访问相应的模型（model）获取数据的一种方式。任何情况下，总会有模型和视图，真正改变的是模型和视图的连接方式。连接方式主要有两种：Controller 和 ViewModel，每种连接方式都有自己的优缺点。 MVC: Model-View-ControllerMVC模式最初生根于服务器端的Web开发，后来渐渐能够胜任客户端Web">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-06-09T07:40:37.291Z">
+<meta property="og:image" content="https://abackslash.github.io/2016/06/04/mvc_mvvm/mvc.png">
+<meta property="og:updated_time" content="2016-06-04T15:12:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python os 模块">
-<meta name="twitter:description" content="虽然进程可在单独的内存空间中执行，但除非这些Python进程在单独的处理器上执行，否则，实际并不是“同时”运行的。是由操作系统把处理器的时间片分配给一个进程，用完时间片后就需退出处理器等待另一个时间片的到来。 另一种方式是在在程序中指定多个“执行线程”，让它们在相同的内存空间中工作。这称为“多线程处理”。线程比进程更有效，因为操作系统不必为每个线程创建单独的内存空间。新建进程用 os.fork 函">
+<meta name="twitter:title" content="MVC vs MVVM">
+<meta name="twitter:description" content="任何一种网站的功能只是前端（front end）或者视图（view）访问相应的模型（model）获取数据的一种方式。任何情况下，总会有模型和视图，真正改变的是模型和视图的连接方式。连接方式主要有两种：Controller 和 ViewModel，每种连接方式都有自己的优缺点。 MVC: Model-View-ControllerMVC模式最初生根于服务器端的Web开发，后来渐渐能够胜任客户端Web">
+<meta name="twitter:image" content="https://abackslash.github.io/2016/06/04/mvc_mvvm/mvc.png">
 
 
 
 
 
 
-  <link rel="canonical" href="https://abackslash.github.io/2018/06/05/python_os模块/"/>
+  <link rel="canonical" href="https://abackslash.github.io/2016/06/04/mvc_mvvm/"/>
 
 
 
@@ -136,7 +138,7 @@
   };
 </script>
 
-  <title>python os 模块 | 疯狂的石头</title>
+  <title>MVC vs MVVM | 疯狂的石头</title>
   
 
 
@@ -289,7 +291,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2018/06/05/python_os模块/">
+    <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2016/06/04/mvc_mvvm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Crazy Stone">
@@ -306,7 +308,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">python os 模块
+          <h1 class="post-title" itemprop="name headline">MVC vs MVVM
               
             
           </h1>
@@ -331,25 +333,9 @@
                 
               
 
-              <time title="创建时间：2018-06-05 22:32:01" itemprop="dateCreated datePublished" datetime="2018-06-05T22:32:01+08:00">2018-06-05</time>
+              <time title="创建时间：2016-06-04 23:12:00" itemprop="dateCreated datePublished" datetime="2016-06-04T23:12:00+08:00">2016-06-04</time>
             
 
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-06-09 15:40:37" itemprop="dateModified" datetime="2018-06-09T15:40:37+08:00">2018-06-09</time>
-              
             
           </span>
 
@@ -365,7 +351,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/随笔/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a></span>
 
                 
                 
@@ -399,23 +385,53 @@
       
 
       
-        <p>虽然进程可在单独的内存空间中执行，但除非这些Python进程在单独的处理器上执行，否则，实际并不是“同时”运行的。是由操作系统把处理器的时间片分配给一个进程，用完时间片后就需退出处理器等待另一个时间片的到来。</p>
-<p>另一种方式是在在程序中指定多个“执行线程”，让它们在相同的内存空间中工作。这称为“多线程处理”。线程比进程更有效，因为操作系统不必为每个线程创建单独的内存空间。新建进程用 <strong>os.fork</strong> 函数。但它只在 <strong>POSIX</strong> 系统上可用，在windows版的Python中，os模块没有定义 <strong>os.fork</strong> 函数。相反，windows程序员用多线程编程技术来完成并发任务。</p>
+        <p>任何一种网站的功能只是前端（front end）或者视图（view）访问相应的模型（model）获取数据的一种方式。任何情况下，总会有模型和视图，真正改变的是模型和视图的连接方式。连接方式主要有两种：Controller 和 ViewModel，每种连接方式都有自己的优缺点。</p>
+<h2 id="MVC-Model-View-Controller"><a href="#MVC-Model-View-Controller" class="headerlink" title="MVC: Model-View-Controller"></a>MVC: Model-View-Controller</h2><p>MVC模式最初生根于服务器端的Web开发，后来渐渐能够胜任客户端Web开发，能够满足其复杂性和丰富性。</p>
+<p>MVC 在服务器端的表现为：</p>
+<ul>
+<li><p>Model: 模型（用于封装与应用程序的业务逻辑相关的数据以及对数据的处理方法）</p>
+</li>
+<li><p>View: 视图（渲染页面）</p>
+</li>
+<li><p>Controller: 控制器（M和V之间的连接器，用于控制应用程序的流程，及页面的业务逻辑）</p>
+</li>
+</ul>
+<p>MVC 的思想就是 Controller 负责将 Model 的数据用 View 显示出来，换句话说就是在Controller里面把Model的数据赋值给View。MVC 设计模式中视图和模型不需要有联系，因此，MVC模式允许开发人员在 Web 应用程序的不同组件上同时工作而不会相互影响。</p>
+<p>但是 MVC 也有一些缺点。其中每个 Model 都有对应的 Controller，当应用程序扩展得更大并演变成具有许多相关模型时，所使用的控制器数量必须同步增长。这与大多数框架带来的新抽象层的自然引入相结合，创建了一个变得非常难以浏览的代码库。</p>
 <a id="more"></a>
-<p><strong>os.fork</strong> 函数创建进程的过程是这样的。程序每次执行时，操作系统都会创建一个新进程来运行程序指令。进程还可调用os.fork，要求操作系统新建一个进程。父进程是调用 <strong>os.fork</strong> 函数的进程。父进程所创建的进程叫子进程。</p>
-<p>每个进程都有一个不重复的进程ID号。或称pid，它对进程进行标识。子进程与父进程完全相同，子进程从父进程继承了多个值的拷贝。如全局变量和环境变量。两个进程的唯一区别是fork的返回值。子进程接收返回值0，而父进程接收子进程的pid作为返回值。</p>
-<p>用 <strong>os.fork</strong> 创建的子进程和父进程作为<strong>异步的并发进程</strong>而单独执行。异步是指它们各行其是，相互间不进行同步；并发是指它们可同时执行。所以我们无法知道子进程和父进程的相对速度。</p>
-<p><strong>os.wait</strong> 函数用于等待子进程结束(只适用于UNIX兼容系统)。该函数返回包含两个元素的元组，包括已完成的子进程号pid。以及子进程的退出状态，返回状态为0，表明子进程成功完成。返回状态为正整数表明子进程终止时出错。</p>
-<p>如没有子进程，会引发OSError错误。<strong>os.wait</strong> 要求父进程等待它的任何一个子进程结束执行，然后唤醒父进程。要指示父进程等候一个指定的子进程终止，可在父进程中使用 <strong>os.waitpid</strong> 函数(只适用于unix兼容系统)。</p>
-<p>它可等候一个指定进程结束，然后返回一个双元素元组，其中包括子进程的pid和子进程的退出状态。函数调用将pid作为第一个参数传递。并将一个选项作为第二个选项，如果第一个参数大于0，则waitpid会等待该pid结束，如果第一个参数是-1，则会等候所有子进程，也就和 <strong>os.wait</strong> 一样。</p>
-<p><strong>os.fork()</strong> 和 <strong>os.wait()</strong> 示例：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> signal</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">onsigchld</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    print(<span class="string">'收到子进程结束信号'</span>)</span><br><span class="line">signal.signal(signal.SIGCHLD, onsigchld)</span><br><span class="line"></span><br><span class="line">pid = os.fork()</span><br><span class="line"><span class="keyword">if</span> pid == <span class="number">0</span>:</span><br><span class="line">    print(<span class="string">'我是子进程,pid是'</span>, os.getpid())</span><br><span class="line">    sleep(<span class="number">2</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">'我是父进程,pid是'</span>, os.getpid())</span><br><span class="line">    <span class="comment"># 等待子进程结束</span></span><br><span class="line">    os.wait()</span><br><span class="line"></span><br><span class="line">输出：</span><br><span class="line">我是父进程,pid是 <span class="number">92694</span></span><br><span class="line">我是子进程,pid是 <span class="number">92695</span></span><br><span class="line">收到子进程结束信号</span><br></pre></td></tr></table></figure>
-<p>用 <strong>os.system</strong> 和 <strong>os.exec</strong> 函数族来执行系统命令和其它程序。<strong>os.system</strong> 使用shell来执行系统命令，然后在命令结束之后把控制权返回给原始进程；<strong>os.exec</strong> 函数族在执行完命令后不将控制权返回给调用进程。它会接管Python进程，pid不变。这两个函数支持unix和windows平台。</p>
-<p><strong>os.popen()</strong> 函数可执行命令，并获得命令的stdout流。函数要取得两个参数，一个是要执行的命令，另一个是调用函数所用的模式。如“r”只读模式。<strong>os.popen2()</strong> 函数执行命令，并获得命令的stdout流和stdin流。函数返回一个元组，其中包含有两个文件对象，一个对象对应stdin流，一个对象对应stdout流。</p>
-<p>进程使用IPC机制在进程间传递信息，一种IPC机制是“管道”，它是一种类似于文件的对象，提供单向通信渠道。父进程可打开一个管道，再分支一个子进程。父进程使用管道将信息写入(发送到)子进程，而子进程使用管道从父进程读取信息。在python中使用 <strong>os.pipe</strong> 函数创建管道。</p>
-<p><strong>os._exit()</strong> 类似于 <strong>sys.exit()</strong>，但它不执行任何的清除工作(例如刷新缓冲区)。所以 <strong>os._exit()</strong> 尤其适用于退出子进程。如果程序使用 <strong>sys.exit()</strong>，操作系统会回收父进程或其它子进程可能仍然需要的资源。传给 <strong>os._exit()</strong> 函数的参数必须是进程的退出状态。退出状态为0，表示正常终止。</p>
-<p>进程也可用信号进行通信。所谓“信号”，是操作系统采取异步方式传给程序的消息。如 <strong>CTRL+C</strong> 会传递一个“中断信号”，通常该信号导致程序中止。然而程序完全可以指定用不同的行动来响应任何一个信号。在信号处理中，程序要接收信号，并根据那个信号采取一项行动。</p>
-<p>错误（例如向已关闭管道写入）、事件（例如计时器变成0）以及用户输入（例如按ctrl+c）都会产生信号。针对每个信号，每个python程序都有一个默认的信号处理程序，并不是所有操作系统都能从一个正在运行的程序创建单独的进程，所以，进程管理是移植性最差的一项Python进程特性。每个系统都定义了特有信号集。signal是依赖于具体平台的模块，其中只包含系统定义的信号。</p>
+<p>iOS 中的 MVC：</p>
+<img src="/2016/06/04/mvc_mvvm/mvc.png" title="mvc">
+<h2 id="MVVM-Model-View-ViewModel"><a href="#MVVM-Model-View-ViewModel" class="headerlink" title="MVVM: Model-View-ViewModel"></a>MVVM: Model-View-ViewModel</h2><p>MVVM 设计模式主要用于 Web 上的 single page/function applications.</p>
+<p>我们需要数据所以有了M，我们需要界面所以有了V，而我们需要找一个地方把M赋值给V来显示，所以有了C，然而我们忽略了一个很重要的操作：数据解析。在MVC出生的年代，手机APP的数据往往都比较简单，没有现在那么复杂，所以那时的数据解析很可能一步就解决了，所以既然有这样一个问题要处理，而面向对象的思想就是用类和对象来解决问题，显然V和M早就被定义死了，它们都不应该处理“解析数据”的问题，理所应当的，“解析数据”这个问题就交给C来完成了。而现在的手机App功能越来越复杂，数据结构也越来越复杂，所以数据解析也就没那么简单了。如果我们继续按照MVC的设计思路，将数据解析的部分放到了Controller里面，那么Controller就将变得相当臃肿。还有相当重要的一点：Controller被设计出来并不是处理数据解析的。1、管理自己的生命周期；2、处理Controller之间的跳转；3、实现Controller容器。这里面根本没有“数据解析”这一项，所以显然，数据解析也不应该由Controller来完成。那么我们的MVC中，M、V、C都不应该处理数据解析，那么由谁来呢？这个问题实际上在面向对象的时候相当好回答：既然目前没有类能够处理这个问题，那么就创建一个新的类出来解决不就好了？所以我们就专门为数据解析创建出了一个新的类：ViewModel。这就是MVVM的诞生。</p>
+<p>因为 Controller 只需要数据解析的结果而不关心过程，所以就相当于VM把“如何解析Model”给封装起来了，C甚至根本就不需要知道M的存在就能把工作做好，前提它需要持有一个VM。那么我们MVVM中的持有关系就是：C持有VM，VM持有M。</p>
+<p>MVVM 四层结构：</p>
+<ul>
+<li>M(odel)层：模型，定义数据结构。</li>
+<li>C(ontroller)层：实现业务逻辑，数据的增删改查。在MVVM模式中一般把C层算在M层中</li>
+<li>ViewModel层：顾名思义是视图View的模型、映射和显示逻辑（如if for等，非业务逻辑），另外绑定器也在此层。ViewModel是基于视图开发的一套模型，如果你的应用是给盲人用的，那么也可以开发一套基于Audio的模型AudioModel。</li>
+<li>V(iew)层：将ViewModel通过特定的GUI展示出来，并在GUI控件上绑定视图交互事件，V(iew)一般由MVVM框架自动生成在浏览器中。</li>
+</ul>
+<p>MVVM 在 React 中对应关系：</p>
+<ul>
+<li>M(odel)：对应组件的方法或生命周期函数中实现的业务逻辑和this.state中保存的本地数据，如果React集成了redux +react-redux，那么组件中的业务逻辑和本地数据可以完全被解耦出来单独存放当做M层，如业务逻辑放在Reducer和Action中。</li>
+<li>V(iew)-M(odel)：对应组件中的JSX，它实质上是Virtual DOM的语法糖。React负责维护 Virtual DOM以及对其进行diff运算，而React-dom 会把Virtual DOM渲染成浏览器中的真实DOM</li>
+<li>View：对应框架在浏览器中基于虚拟DOM生成的真实DOM（并不需要我们自己书写）以及我们书写的CSS</li>
+<li>绑定器：对应JSX中的命令以及绑定的数据，如className={ this.props.xxx }、{this.props.xxx}等等</li>
+</ul>
+<p>MVVM 的双向绑和单向绑区别：</p>
+<ul>
+<li>一般，只有UI表单控件才存在双向数据绑定，非UI表单控件只有单向数据绑定。</li>
+<li>单向数据绑定是指：M的变化可以自动更新到ViewModel，但ViewModel的变化需要手动更新到M。（通过给表单控件设置事件监听）</li>
+<li>双向数据绑定是指念：M的变化可以自动更新到ViewModel，ViewModel的变化也可以自动更新到M。</li>
+<li>双向绑定 = 单向绑定 + UI事件监听。双向和单向只不过是框架封装程度上的差异，本质上两者是可以相互转换的。</li>
+<li>优缺点：在表单交互较多的情况下，单向数据绑定的优点是数据更易于跟踪管理和维护，缺点是代码量较多比较啰嗦，双向数据绑定的优缺点和单向绑定正好相反。</li>
+</ul>
+<p>三大框架的异同：</p>
+<ul>
+<li>三大框架都是数据驱动型的框架</li>
+<li>vue及angular是双向数据绑定；react是单向数据绑定。React貌似使用的也是Object.defineProperty监控数据，只是没有进一步把表单控件的事件封装进v-model</li>
+<li>Vuex、Redux都是单项数据绑定的，即M的变化可以自动更新到V，但V的变化必须手动触发事件更新到M，这种单项数据绑定使数据更易于跟踪管理和维护。</li>
+</ul>
 
       
     </div>
@@ -443,18 +459,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/06/05/python中的@修饰符/" rel="next" title="python中的 @ 修饰符">
-                <i class="fa fa-chevron-left"></i> python中的 @ 修饰符
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/06/05/Python_yield/" rel="prev" title="Python yield 使用浅析">
-                Python yield 使用浅析 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/01/09/python_tips/" rel="prev" title="Python 笔记">
+                Python 笔记 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -504,8 +516,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -597,6 +618,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MVC-Model-View-Controller"><span class="nav-number">1.</span> <span class="nav-text">MVC: Model-View-Controller</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVVM-Model-View-ViewModel"><span class="nav-number">2.</span> <span class="nav-text">MVVM: Model-View-ViewModel</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
