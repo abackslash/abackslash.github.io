@@ -117,7 +117,7 @@
 <meta property="og:description" content="任何一种网站的功能只是前端（front end）或者视图（view）访问相应的模型（model）获取数据的一种方式。任何情况下，总会有模型和视图，真正改变的是模型和视图的连接方式。连接方式主要有两种：Controller 和 ViewModel，每种连接方式都有自己的优缺点。 MVC: Model-View-ControllerMVC模式最初生根于服务器端的Web开发，后来渐渐能够胜任客户端Web">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://abackslash.github.io/2016/06/04/mvc_mvvm/mvc.png">
-<meta property="og:updated_time" content="2019-02-28T15:07:10.337Z">
+<meta property="og:updated_time" content="2019-02-28T15:15:45.703Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MVC vs MVVM">
 <meta name="twitter:description" content="任何一种网站的功能只是前端（front end）或者视图（view）访问相应的模型（model）获取数据的一种方式。任何情况下，总会有模型和视图，真正改变的是模型和视图的连接方式。连接方式主要有两种：Controller 和 ViewModel，每种连接方式都有自己的优缺点。 MVC: Model-View-ControllerMVC模式最初生根于服务器端的Web开发，后来渐渐能够胜任客户端Web">
@@ -350,7 +350,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-28 23:07:10" itemprop="dateModified" datetime="2019-02-28T23:07:10+08:00">2019-02-28</time>
+                <time title="修改时间：2019-02-28 23:15:45" itemprop="dateModified" datetime="2019-02-28T23:15:45+08:00">2019-02-28</time>
               
             
           </span>
@@ -405,25 +405,22 @@
 <h2 id="MVC-Model-View-Controller"><a href="#MVC-Model-View-Controller" class="headerlink" title="MVC: Model-View-Controller"></a>MVC: Model-View-Controller</h2><p>MVC模式最初生根于服务器端的Web开发，后来渐渐能够胜任客户端Web开发，能够满足其复杂性和丰富性。</p>
 <p>MVC 在服务器端的表现为：</p>
 <ul>
-<li><p>Model: 模型（用于封装与应用程序的业务逻辑相关的数据以及对数据的处理方法）</p>
-</li>
-<li><p>View: 视图（渲染页面）</p>
-</li>
-<li><p>Controller: 控制器（M和V之间的连接器，用于控制应用程序的流程，及页面的业务逻辑）</p>
-</li>
+<li>Model: 模型（用于封装与应用程序的业务逻辑相关的数据以及对数据的处理方法）</li>
+<li>View: 视图（渲染页面）</li>
+<li>Controller: 控制器（M和V之间的连接器，用于控制应用程序的流程，及页面的业务逻辑）</li>
 </ul>
 <p>MVC 的思想就是 Controller 负责将 Model 的数据用 View 显示出来，换句话说就是在Controller里面把Model的数据赋值给View。MVC 设计模式中视图和模型不需要有联系，因此，MVC模式允许开发人员在 Web 应用程序的不同组件上同时工作而不会相互影响。</p>
 <p>但是 MVC 也有一些缺点。其中每个 Model 都有对应的 Controller，当应用程序扩展得更大并演变成具有许多相关模型时，所使用的控制器数量必须同步增长。这与大多数框架带来的新抽象层的自然引入相结合，创建了一个变得非常难以浏览的代码库。</p>
 <a id="more"></a>
 <p>iOS 中的 MVC：</p>
 <img src="/2016/06/04/mvc_mvvm/mvc.png" title="mvc">
-<h2 id="MVVM-Model-View-ViewModel"><a href="#MVVM-Model-View-ViewModel" class="headerlink" title="MVVM: Model-View-ViewModel"></a>MVVM: Model-View-ViewModel</h2><p>MVVM 设计模式主要用于 Web 上的 single page/function applications.</p>
+<h2 id="MVVM-Model-View-ViewModel"><a href="#MVVM-Model-View-ViewModel" class="headerlink" title="MVVM: Model-View-ViewModel"></a>MVVM: Model-View-ViewModel</h2><p>MVVM 设计模式主要用于 Web 上的 single page/function applications。</p>
 <p>我们需要数据所以有了M，我们需要界面所以有了V，而我们需要找一个地方把M赋值给V来显示，所以有了C，然而我们忽略了一个很重要的操作：数据解析。在MVC出生的年代，手机APP的数据往往都比较简单，没有现在那么复杂，所以那时的数据解析很可能一步就解决了，所以既然有这样一个问题要处理，而面向对象的思想就是用类和对象来解决问题，显然V和M早就被定义死了，它们都不应该处理“解析数据”的问题，理所应当的，“解析数据”这个问题就交给C来完成了。而现在的手机App功能越来越复杂，数据结构也越来越复杂，所以数据解析也就没那么简单了。如果我们继续按照MVC的设计思路，将数据解析的部分放到了Controller里面，那么Controller就将变得相当臃肿。还有相当重要的一点：Controller被设计出来并不是处理数据解析的。1、管理自己的生命周期；2、处理Controller之间的跳转；3、实现Controller容器。这里面根本没有“数据解析”这一项，所以显然，数据解析也不应该由Controller来完成。那么我们的MVC中，M、V、C都不应该处理数据解析，那么由谁来呢？这个问题实际上在面向对象的时候相当好回答：既然目前没有类能够处理这个问题，那么就创建一个新的类出来解决不就好了？所以我们就专门为数据解析创建出了一个新的类：ViewModel。这就是MVVM的诞生。</p>
 <p>因为 Controller 只需要数据解析的结果而不关心过程，所以就相当于VM把“如何解析Model”给封装起来了，C甚至根本就不需要知道M的存在就能把工作做好，前提它需要持有一个VM。那么我们MVVM中的持有关系就是：C持有VM，VM持有M。</p>
 <p>MVVM 四层结构：</p>
 <ul>
-<li>Model 层：模型是指代表真实状态内容的领域模型（面向对象），或指代表内容的数据访问层（以数据为中心）</li>
-<li>Controller 层：实现业务逻辑，数据的增删改查。在MVVM模式中一般把C层算在M层中</li>
+<li>Model 层：模型是指代表真实状态内容的领域模型（面向对象），或指代表内容的数据访问层（以数据为中心）。</li>
+<li>Controller 层：实现业务逻辑，数据的增删改查。在MVVM模式中一般把C层算在M层中。</li>
 <li>ViewModel 层：视图模型是暴露公共属性和命令的视图的抽象。MVVM没有MVC模式的控制器，也没有MVP模式的presenter，有的是一个绑定器。在视图模型中，绑定器在视图和数据绑定器之间进行通信。</li>
 <li>View 层：将ViewModel通过特定的GUI展示出来，并在GUI控件上绑定视图交互事件，View 一般由MVVM框架自动生成在浏览器中。</li>
 <li>绑定器：声明性数据和命令绑定隐含在MVVM模式中。在Microsoft解决方案堆中，绑定器是一种名为XAML的标记语言。绑定器使开发人员免于被迫编写样板式逻辑来同步视图模型和视图。在微软的堆之外实现时，声明性数据绑定技术的出现是实现该模式的一个关键因素。</li>
@@ -431,9 +428,9 @@
 <p>MVVM 在 React 中对应关系：</p>
 <ul>
 <li>Model：对应组件的方法或生命周期函数中实现的业务逻辑和this.state中保存的本地数据，如果React集成了redux +react-redux，那么组件中的业务逻辑和本地数据可以完全被解耦出来单独存放当做M层，如业务逻辑放在Reducer和Action中。</li>
-<li>ViewModel：对应组件中的JSX，它实质上是Virtual DOM的语法糖。React负责维护 Virtual DOM以及对其进行diff运算，而React-dom 会把Virtual DOM渲染成浏览器中的真实DOM</li>
-<li>View：对应框架在浏览器中基于虚拟DOM生成的真实DOM（并不需要我们自己书写）以及我们书写的CSS</li>
-<li>绑定器：对应JSX中的命令以及绑定的数据，如className={ this.props.xxx }、{this.props.xxx}等等</li>
+<li>ViewModel：对应组件中的JSX，它实质上是Virtual DOM的语法糖。React负责维护 Virtual DOM以及对其进行diff运算，而React-dom 会把Virtual DOM渲染成浏览器中的真实DOM。</li>
+<li>View：对应框架在浏览器中基于虚拟DOM生成的真实DOM（并不需要我们自己书写）以及我们书写的CSS。</li>
+<li>绑定器：对应JSX中的命令以及绑定的数据，如className={ this.props.xxx }、{this.props.xxx} 等等。</li>
 </ul>
 <p>MVVM 的双向绑和单向绑区别：</p>
 <ul>
