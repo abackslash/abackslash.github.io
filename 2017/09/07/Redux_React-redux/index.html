@@ -108,27 +108,25 @@
 
 
 
-  <meta name="description" content="任何一种网站的功能只是前端（front end）或者视图（view）访问相应的模型（model）获取数据的一种方式。任何情况下，总会有模型和视图，真正改变的是模型和视图的连接方式。连接方式主要有两种：Controller 和 ViewModel，每种连接方式都有自己的优缺点。 MVC: Model-View-ControllerMVC模式最初生根于服务器端的Web开发，后来渐渐能够胜任客户端Web">
+  <meta name="description" content="ReduxRedux 是 JavaScript 状态容器，提供可预测化的状态管理。它由 Flux 演变而来，但受 Elm 的启发，避开了 Flux 的复杂性。 应用中所有的 state 都以一个对象树的形式储存在一个单一的 store 中。 惟一改变 state 的办法是触发 action，一个描述发生什么的对象。 为了描述 action 如何改变 state 树，你需要编写 reducers。r">
 <meta name="keywords" content="iOS,Android,Python,React-Native,Java,PostgreSQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MVC vs MVVM">
-<meta property="og:url" content="https://abackslash.github.io/2016/06/04/mvc_mvvm/index.html">
+<meta property="og:title" content="Redux &amp; React-redux">
+<meta property="og:url" content="https://abackslash.github.io/2017/09/07/Redux_React-redux/index.html">
 <meta property="og:site_name" content="疯狂的石头">
-<meta property="og:description" content="任何一种网站的功能只是前端（front end）或者视图（view）访问相应的模型（model）获取数据的一种方式。任何情况下，总会有模型和视图，真正改变的是模型和视图的连接方式。连接方式主要有两种：Controller 和 ViewModel，每种连接方式都有自己的优缺点。 MVC: Model-View-ControllerMVC模式最初生根于服务器端的Web开发，后来渐渐能够胜任客户端Web">
+<meta property="og:description" content="ReduxRedux 是 JavaScript 状态容器，提供可预测化的状态管理。它由 Flux 演变而来，但受 Elm 的启发，避开了 Flux 的复杂性。 应用中所有的 state 都以一个对象树的形式储存在一个单一的 store 中。 惟一改变 state 的办法是触发 action，一个描述发生什么的对象。 为了描述 action 如何改变 state 树，你需要编写 reducers。r">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://abackslash.github.io/2016/06/04/mvc_mvvm/mvc.png">
-<meta property="og:updated_time" content="2019-02-28T15:15:45.703Z">
+<meta property="og:updated_time" content="2017-09-07T13:52:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MVC vs MVVM">
-<meta name="twitter:description" content="任何一种网站的功能只是前端（front end）或者视图（view）访问相应的模型（model）获取数据的一种方式。任何情况下，总会有模型和视图，真正改变的是模型和视图的连接方式。连接方式主要有两种：Controller 和 ViewModel，每种连接方式都有自己的优缺点。 MVC: Model-View-ControllerMVC模式最初生根于服务器端的Web开发，后来渐渐能够胜任客户端Web">
-<meta name="twitter:image" content="https://abackslash.github.io/2016/06/04/mvc_mvvm/mvc.png">
+<meta name="twitter:title" content="Redux &amp; React-redux">
+<meta name="twitter:description" content="ReduxRedux 是 JavaScript 状态容器，提供可预测化的状态管理。它由 Flux 演变而来，但受 Elm 的启发，避开了 Flux 的复杂性。 应用中所有的 state 都以一个对象树的形式储存在一个单一的 store 中。 惟一改变 state 的办法是触发 action，一个描述发生什么的对象。 为了描述 action 如何改变 state 树，你需要编写 reducers。r">
 
 
 
 
 
 
-  <link rel="canonical" href="https://abackslash.github.io/2016/06/04/mvc_mvvm/"/>
+  <link rel="canonical" href="https://abackslash.github.io/2017/09/07/Redux_React-redux/"/>
 
 
 
@@ -138,7 +136,7 @@
   };
 </script>
 
-  <title>MVC vs MVVM | 疯狂的石头</title>
+  <title>Redux & React-redux | 疯狂的石头</title>
   
 
 
@@ -291,7 +289,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2016/06/04/mvc_mvvm/">
+    <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2017/09/07/Redux_React-redux/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Crazy Stone">
@@ -308,7 +306,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MVC vs MVVM
+          <h1 class="post-title" itemprop="name headline">Redux & React-redux
               
             
           </h1>
@@ -333,25 +331,9 @@
                 
               
 
-              <time title="创建时间：2016-06-04 23:12:00" itemprop="dateCreated datePublished" datetime="2016-06-04T23:12:00+08:00">2016-06-04</time>
+              <time title="创建时间：2017-09-07 21:52:00" itemprop="dateCreated datePublished" datetime="2017-09-07T21:52:00+08:00">2017-09-07</time>
             
 
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-02-28 23:15:45" itemprop="dateModified" datetime="2019-02-28T23:15:45+08:00">2019-02-28</time>
-              
             
           </span>
 
@@ -401,54 +383,27 @@
       
 
       
-        <p>任何一种网站的功能只是前端（front end）或者视图（view）访问相应的模型（model）获取数据的一种方式。任何情况下，总会有模型和视图，真正改变的是模型和视图的连接方式。连接方式主要有两种：Controller 和 ViewModel，每种连接方式都有自己的优缺点。</p>
-<h2 id="MVC-Model-View-Controller"><a href="#MVC-Model-View-Controller" class="headerlink" title="MVC: Model-View-Controller"></a>MVC: Model-View-Controller</h2><p>MVC模式最初生根于服务器端的Web开发，后来渐渐能够胜任客户端Web开发，能够满足其复杂性和丰富性。</p>
-<p>MVC 在服务器端的表现为：</p>
+        <h2 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h2><p>Redux 是 JavaScript 状态容器，提供可预测化的状态管理。它由 Flux 演变而来，但受 Elm 的启发，避开了 Flux 的复杂性。</p>
+<p>应用中所有的 state 都以一个对象树的形式储存在一个单一的 store 中。 惟一改变 state 的办法是触发 action，一个描述发生什么的对象。 为了描述 action 如何改变 state 树，你需要编写 reducers。reducer 只是一个接收 state 和 action，并返回新的 state 的函数。 对于大的应用来说，不大可能仅仅只写一个这样的函数，所以我们编写很多小函数来分别管理 state 的一部分：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">visibilityFilter</span>(<span class="params">state = <span class="string">'SHOW_ALL'</span>, action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (action.type === <span class="string">'SET_VISIBILITY_FILTER'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> action.filter;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">todos</span>(<span class="params">state = [], action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="string">'ADD_TODO'</span>:</span><br><span class="line">    <span class="keyword">return</span> state.concat([&#123; <span class="attr">text</span>: action.text, <span class="attr">completed</span>: <span class="literal">false</span> &#125;]);</span><br><span class="line">  <span class="keyword">case</span> <span class="string">'TOGGLE_TODO'</span>:</span><br><span class="line">    <span class="keyword">return</span> state.map(<span class="function">(<span class="params">todo, index</span>) =&gt;</span></span><br><span class="line">      action.index === index ?</span><br><span class="line">        &#123; <span class="attr">text</span>: todo.text, <span class="attr">completed</span>: !todo.completed &#125; :</span><br><span class="line">        todo</span><br><span class="line">   )</span><br><span class="line">  <span class="keyword">default</span>:</span><br><span class="line">    <span class="keyword">return</span> state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再开发一个 reducer 调用这两个 reducer，进而来管理整个应用的 state：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">todoApp</span>(<span class="params">state = &#123;&#125;, action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    todos: todos(state.todos, action),</span><br><span class="line">    visibilityFilter: visibilityFilter(state.visibilityFilter, action)</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在vue中，可以使用vuex进行数据管理，在react中，可以使用redux进行数据管理。redux主要由Store、Reducer和Action组成：</p>
 <ul>
-<li>Model: 模型（用于封装与应用程序的业务逻辑相关的数据以及对数据的处理方法）</li>
-<li>View: 视图（渲染页面）</li>
-<li>Controller: 控制器（M和V之间的连接器，用于控制应用程序的流程，及页面的业务逻辑）</li>
+<li>Store：状态载体，访问状态、提交状态、监听状态变更</li>
+<li>Reducer：状态更新具体执行者，纯函数（接收 state 和 action，并返回新的 state）</li>
+<li>Action：存放数据的对象，即消息的载体，只能被别人操作，自己不能进行任何操作</li>
 </ul>
-<p>MVC 的思想就是 Controller 负责将 Model 的数据用 View 显示出来，换句话说就是在Controller里面把Model的数据赋值给View。MVC 设计模式中视图和模型不需要有联系，因此，MVC模式允许开发人员在 Web 应用程序的不同组件上同时工作而不会相互影响。</p>
-<p>但是 MVC 也有一些缺点。其中每个 Model 都有对应的 Controller，当应用程序扩展得更大并演变成具有许多相关模型时，所使用的控制器数量必须同步增长。这与大多数框架带来的新抽象层的自然引入相结合，创建了一个变得非常难以浏览的代码库。</p>
-<a id="more"></a>
-<p>iOS 中的 MVC：</p>
-<img src="/2016/06/04/mvc_mvvm/mvc.png" title="mvc">
-<h2 id="MVVM-Model-View-ViewModel"><a href="#MVVM-Model-View-ViewModel" class="headerlink" title="MVVM: Model-View-ViewModel"></a>MVVM: Model-View-ViewModel</h2><p>MVVM 设计模式主要用于 Web 上的 single page/function applications。</p>
-<p>我们需要数据所以有了M，我们需要界面所以有了V，而我们需要找一个地方把M赋值给V来显示，所以有了C，然而我们忽略了一个很重要的操作：数据解析。在MVC出生的年代，手机APP的数据往往都比较简单，没有现在那么复杂，所以那时的数据解析很可能一步就解决了，所以既然有这样一个问题要处理，而面向对象的思想就是用类和对象来解决问题，显然V和M早就被定义死了，它们都不应该处理“解析数据”的问题，理所应当的，“解析数据”这个问题就交给C来完成了。而现在的手机App功能越来越复杂，数据结构也越来越复杂，所以数据解析也就没那么简单了。如果我们继续按照MVC的设计思路，将数据解析的部分放到了Controller里面，那么Controller就将变得相当臃肿。还有相当重要的一点：Controller被设计出来并不是处理数据解析的。1、管理自己的生命周期；2、处理Controller之间的跳转；3、实现Controller容器。这里面根本没有“数据解析”这一项，所以显然，数据解析也不应该由Controller来完成。那么我们的MVC中，M、V、C都不应该处理数据解析，那么由谁来呢？这个问题实际上在面向对象的时候相当好回答：既然目前没有类能够处理这个问题，那么就创建一个新的类出来解决不就好了？所以我们就专门为数据解析创建出了一个新的类：ViewModel。这就是MVVM的诞生。</p>
-<p>因为 Controller 只需要数据解析的结果而不关心过程，所以就相当于VM把“如何解析Model”给封装起来了，C甚至根本就不需要知道M的存在就能把工作做好，前提它需要持有一个VM。那么我们MVVM中的持有关系就是：C持有VM，VM持有M。</p>
-<p>MVVM 四层结构：</p>
-<ul>
-<li>Model 层：模型是指代表真实状态内容的领域模型（面向对象），或指代表内容的数据访问层（以数据为中心）。</li>
-<li>Controller 层：实现业务逻辑，数据的增删改查。在MVVM模式中一般把C层算在M层中。</li>
-<li>ViewModel 层：视图模型是暴露公共属性和命令的视图的抽象。MVVM没有MVC模式的控制器，也没有MVP模式的presenter，有的是一个绑定器。在视图模型中，绑定器在视图和数据绑定器之间进行通信。</li>
-<li>View 层：将ViewModel通过特定的GUI展示出来，并在GUI控件上绑定视图交互事件，View 一般由MVVM框架自动生成在浏览器中。</li>
-<li>绑定器：声明性数据和命令绑定隐含在MVVM模式中。在Microsoft解决方案堆中，绑定器是一种名为XAML的标记语言。绑定器使开发人员免于被迫编写样板式逻辑来同步视图模型和视图。在微软的堆之外实现时，声明性数据绑定技术的出现是实现该模式的一个关键因素。</li>
-</ul>
-<p>MVVM 在 React 中对应关系：</p>
-<ul>
-<li>Model：对应组件的方法或生命周期函数中实现的业务逻辑和this.state中保存的本地数据，如果React集成了redux +react-redux，那么组件中的业务逻辑和本地数据可以完全被解耦出来单独存放当做M层，如业务逻辑放在Reducer和Action中。</li>
-<li>ViewModel：对应组件中的JSX，它实质上是Virtual DOM的语法糖。React负责维护 Virtual DOM以及对其进行diff运算，而React-dom 会把Virtual DOM渲染成浏览器中的真实DOM。</li>
-<li>View：对应框架在浏览器中基于虚拟DOM生成的真实DOM（并不需要我们自己书写）以及我们书写的CSS。</li>
-<li>绑定器：对应JSX中的命令以及绑定的数据，如className={ this.props.xxx }、{this.props.xxx} 等等。</li>
-</ul>
-<p>MVVM 的双向绑和单向绑区别：</p>
-<ul>
-<li>一般，只有UI表单控件才存在双向数据绑定，非UI表单控件只有单向数据绑定。</li>
-<li>单向数据绑定是指：Model 的变化可以自动更新到 View，但 View 的变化需要手动更新到Model。（通过给表单控件设置事件监听）</li>
-<li>双向数据绑定是指念：Model 的变化可以自动更新到View，View 的变化也可以自动更新到Model。</li>
-<li>双向绑定 = 单向绑定 + UI事件监听。双向和单向只不过是框架封装程度上的差异，本质上两者是可以相互转换的。</li>
-<li>优缺点：在表单交互较多的情况下，单向数据绑定的优点是数据更易于跟踪管理和维护，缺点是代码量较多比较啰嗦，双向数据绑定的优缺点和单向绑定正好相反。</li>
-</ul>
-<p>三大框架的异同：</p>
-<ul>
-<li>三大框架都是数据驱动型的框架</li>
-<li>vue及angular是双向数据绑定；react是单向数据绑定。React使用的也是Object.defineProperty监控数据，只是没有进一步把表单控件的事件封装进v-model</li>
-<li>Vuex、Redux都是单项数据绑定的，即M的变化可以自动更新到V，但V的变化必须手动触发事件更新到M，这种单项数据绑定使数据更易于跟踪管理和维护。</li>
-<li>vue适用于构建快速轻量级的web应用，它具有更快的渲染速度和更小的体积。</li>
-<li>React伟大之处就在于，提出了Virtual Dom这种新颖的思路，并且这种思路衍生出了React Native，有可能会统一Web/Native开发。在性能方面，由于运用了Virtual Dom技术，Reactjs只在调用setState的时候会更新dom，而且还是先更新Virtual Dom，然后和实际Dom比较，最后再更新实际Dom。这个过程比起Angularjs的bind方式来说，一是更新dom的次数少，二是更新dom的内容少，速度肯定快。ReactJS更关注UI的组件化。</li>
-<li>React Native生成的App不是运行在WebView上，而是系统原生的UI，React通过jsx生成系统原生的UI，iOS和Android的React UI组件还是比较相似的，大量代码可以复用。</li>
-</ul>
+<p><a href="https://redux.js.org/introduction/examples" target="_blank" rel="noopener">官方示例</a></p>
+<h2 id="React-redux"><a href="#React-redux" class="headerlink" title="React-redux"></a>React-redux</h2><p>Redux 的 React 绑定库是基于容器组件（Smart/Container Components）和展示组件（Dumb/Presentational Components）相分离的开发思想。</p>
+<p>所有容器组件都可以访问 Redux store，所以可以手动监听它。一种方式是把它以 props 的形式传入到所有容器组件中。但这太麻烦了，因为必须要用 store 把展示组件包裹一层，仅仅是因为恰好在组件树中渲染了一个容器组件。</p>
+<p>建议的方式是使用指定的 React Redux 组件 <provider> 来让所有容器组件都可以访问 store，而不必显式地传递它。只需要在渲染根组件时使用即可。还有一个就是</provider></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])</span><br></pre></td></tr></table></figure>
+<p>连接 React 组件与 Redux store。</p>
+<p>连接操作不会改变原来的组件类。</p>
+<p>反而返回一个新的已与 Redux store 连接的组件类。</p>
+<p>这种随处都可以使用、修改Redux中的数据的方式确实很方便，但Redux推荐的最佳实践还是在尽可能少的地方使用connect，把逻辑，数据相关的都放到容器组件中去处理，其他的组件都由容器组件所生成的props一层层传递下去然后渲染。</p>
+<p><a href="http://cn.redux.js.org/docs/react-redux/" target="_blank" rel="noopener">参考文档</a></p>
 
       
     </div>
@@ -476,14 +431,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/05/19/进程线程协程/" rel="next" title="进程、线程、协程">
+                <i class="fa fa-chevron-left"></i> 进程、线程、协程
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/09/python_tips/" rel="prev" title="Python 笔记">
-                Python 笔记 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/05/21/集合的实现/" rel="prev" title="集合的实现">
+                集合的实现 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -645,7 +604,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MVC-Model-View-Controller"><span class="nav-number">1.</span> <span class="nav-text">MVC: Model-View-Controller</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVVM-Model-View-ViewModel"><span class="nav-number">2.</span> <span class="nav-text">MVVM: Model-View-ViewModel</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redux"><span class="nav-number">1.</span> <span class="nav-text">Redux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-redux"><span class="nav-number">2.</span> <span class="nav-text">React-redux</span></a></li></ol></div>
             
 
           </div>
