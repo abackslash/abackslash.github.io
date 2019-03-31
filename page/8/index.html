@@ -471,6 +471,182 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2017/11/03/JS几种处理异步方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Crazy Stone">
+      <meta itemprop="description" content="step by step...">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="疯狂的石头">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/03/JS几种处理异步方法/" itemprop="url">
+                  JavaScript 处理异步的几种方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-11-03 22:32:00" itemprop="dateCreated datePublished" datetime="2017-11-03T22:32:00+08:00">2017-11-03</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Javascript语言的执行环境是”单线程”（single thread）。为了解决由于执行耗时任务导致整个页面的卡顿的问题，Javascript语言将任务的执行模式分成两种：同步（Synchronous）和异步（Asynchronous）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 可能会涉及到跨域请求的问题，tornado 解决方案：</span><br><span class="line">// CORS是一个W3C标准，全称是“跨域资源共享”（Cross-origin resource sharing）</span><br><span class="line">// 后面的*可以换成ip地址，意为允许访问的地址</span><br><span class="line">self.set_header(<span class="string">'Access-Control-Allow-Origin'</span>, <span class="string">'*'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="async-await"><a href="#async-await" class="headerlink" title="async/await"></a>async/await</h2><p>虽然 co 是社区里面的优秀异步解决方案，但是并不是语言标准，只是一个过渡方案。ES7语言层面提供 async/await 去解决语言层面的难题。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> options = &#123;</span><br><span class="line">  url: <span class="string">'https://localhost:9997/'</span>,</span><br><span class="line">  headers: &#123;</span><br><span class="line">    <span class="string">'User-Agent'</span>: <span class="string">'request'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> getRepoData = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    request(options, (err, res, body) =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        reject(err);</span><br><span class="line">      &#125;</span><br><span class="line">      resolve(body);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">asyncFun</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> value = <span class="keyword">await</span> getRepoData();</span><br><span class="line">    <span class="comment">// ... 和上面的yield类似，如果有多个异步流程，可以放在这里，比如</span></span><br><span class="line">    <span class="comment">// const r1 = await getR1();</span></span><br><span class="line">    <span class="comment">// const r2 = await getR2();</span></span><br><span class="line">    <span class="comment">// const r3 = await getR3();</span></span><br><span class="line">    <span class="comment">// 每个await相当于暂停，执行await之后会等待它后面的函数</span></span><br><span class="line">    <span class="comment">//（不是generator）返回值之后再执行后面其它的 await 逻辑。</span></span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">asyncFun().then(<span class="function"><span class="params">x</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">`x: <span class="subst">$&#123;x&#125;</span>`</span>)).catch(<span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.error(err));</span><br></pre></td></tr></table></figure>
+<p><strong>tips：</strong></p>
+<ul>
+<li>async 用来申明里面包裹的内容可以进行同步的方式执行，await则是进行执行顺序控制，每次执行一个 await，程序都会暂停等待 await 返回值，然后再执行之后的 await。</li>
+<li>await 后面调用的函数需要返回一个 promise，另外这个函数是一个普通的函数即可，而不是 generator。</li>
+<li>await 只能用在 async 函数之中，用在普通函数中会报错。</li>
+<li>await 命令后面的 Promise 对象，运行结果可能是 rejected，所以最好把 await 命令放在 try…catch 代码块中。</li>
+</ul>
+<p>其实，async/await 的用法和 co 差不多，await 和 yield 都是表示暂停，外面包裹一层 async 或者 co 来表示里面的代码可以采用同步的方式进行处理。不过 async/await 里面的await 后面跟着的函数不需要额外处理，co 是需要将它写成一个 generator 的。</p>
+<h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p>使用 Promise 可以很好的减少嵌套的层数，Promise 的实现采用了状态机，在函数里面可以很好的通过 resolve 和 reject 进行流程控制，可以按照顺序链式的去执行一系列代码逻辑。下面是使用 Promise 的一个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>);</span><br><span class="line"><span class="comment">// 请求的url和header</span></span><br><span class="line"><span class="keyword">const</span> options = &#123;</span><br><span class="line">  url: <span class="string">'https://localhost:9997/'</span>,</span><br><span class="line">  headers: &#123;</span><br><span class="line">    <span class="string">'User-Agent'</span>: <span class="string">'request'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取信息</span></span><br><span class="line"><span class="keyword">const</span> getRepoData = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    request(options, (err, res, body) =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        reject(err);</span><br><span class="line">      &#125;</span><br><span class="line">      resolve(body);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">getRepoData()</span><br><span class="line">  .then(<span class="function">(<span class="params">result</span>) =&gt;</span> <span class="built_in">console</span>.log(result))</span><br><span class="line">  .catch(<span class="function">(<span class="params">reason</span>) =&gt;</span> <span class="built_in">console</span>.error(reason));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 此处如果是多个 Promise 顺序执行的话，如下：</span></span><br><span class="line"><span class="comment">// 每个 then 里面去执行下一个 promise</span></span><br><span class="line"><span class="comment">// getRepoData()</span></span><br><span class="line"><span class="comment">//   .then((value2) =&gt; &#123;return promise2&#125;)</span></span><br><span class="line"><span class="comment">//   .then((value3) =&gt; &#123;return promise3&#125;)</span></span><br><span class="line"><span class="comment">//   .then((x) =&gt; console.log(x))</span></span><br></pre></td></tr></table></figure>
+<p>不过 Promise 仍然存在缺陷，它只是减少了嵌套，并不能完全消除嵌套。举个例子，对于多个 promise 串行执行的情况，第一个 promise 的逻辑执行完之后，我们需要在它的 then 函数里面去执行第二个 promise，这个时候会产生一层嵌套。</p>
+<h2 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h2><p>在 Node.js 中经常用的 tj/co 就是使用 generator 结合 promise 来实现的，co 是 coroutine 的简称，借鉴于 python、lua 等语言中的协程。它可以将异步的代码逻辑写成同步的方式，这使得代码的阅读和组织变得更加清晰，也便于调试。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> co = <span class="built_in">require</span>(<span class="string">'co'</span>);</span><br><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> options = &#123;</span><br><span class="line">  url: <span class="string">'https://localhost:9997/'</span>,</span><br><span class="line">  headers: &#123;</span><br><span class="line">    <span class="string">'User-Agent'</span>: <span class="string">'request'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// yield 后面是一个生成器 generator</span></span><br><span class="line"><span class="keyword">const</span> getRepoData = <span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    request(options, (err, res, body) =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        reject(err);</span><br><span class="line">      &#125;</span><br><span class="line">      resolve(body);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">co(<span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> result = <span class="keyword">yield</span> getRepoData;</span><br><span class="line">  <span class="comment">// ... 如果有多个异步流程，可以放在这里，比如</span></span><br><span class="line">  <span class="comment">// const r1 = yield getR1;</span></span><br><span class="line">  <span class="comment">// const r2 = yield getR2;</span></span><br><span class="line">  <span class="comment">// const r3 = yield getR3;</span></span><br><span class="line">  <span class="comment">// 每个yield相当于暂停，执行yield之后会等待它后面的 generator</span></span><br><span class="line">  <span class="comment">// 返回值之后再执行后面其它的yield逻辑。</span></span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(value);</span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.error(err);</span><br></pre></td></tr></table></figure>
+<h2 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h2><p>这是异步编程最基本的方法。假定有两个函数fa和fb，后者等待前者的执行结果。如果fa是一个很耗时的任务，可以考虑改写fa，把fb写成fa的回调函数:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 改写前</span></span><br><span class="line">fa();</span><br><span class="line">fb();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改写后</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fa</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">	setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="comment">// fa 的任务代码</span></span><br><span class="line">		callback;</span><br><span class="line">	&#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行改写后的代码</span></span><br><span class="line">fa(fb);</span><br></pre></td></tr></table></figure>
+<p>回调函数的优点是简单、容易理解和部署，缺点是不利于代码的阅读和维护，各个部分之间高度耦合，流程会很混乱，而且每个任务只能指定一个回调函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">　　setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">　　　　<span class="built_in">console</span>.log(<span class="string">"setTimeout"</span>);</span><br><span class="line">　　&#125;, <span class="number">7000</span>);</span><br><span class="line">　　</span><br><span class="line">　　<span class="function"><span class="keyword">function</span> <span class="title">oneSecond</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">　　　　<span class="keyword">var</span> now = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">　　　　<span class="keyword">var</span> exitTime = now.getTime() + <span class="number">1000</span>;</span><br><span class="line">　　　　<span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">　　　　　　now = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">　　　　　　<span class="keyword">if</span> (now.getTime() &gt;= exitTime) &#123;</span><br><span class="line">　　　　　　　　<span class="built_in">console</span>.log(<span class="string">"oneSecond"</span>);</span><br><span class="line">　　　　　　　　<span class="keyword">return</span>;</span><br><span class="line">　　　　　　&#125;</span><br><span class="line">　　　　&#125;</span><br><span class="line">　　&#125;</span><br><span class="line">　　oneSecond();</span><br><span class="line">　　<span class="function"><span class="keyword">function</span> <span class="title">twoSecond</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">　　　　<span class="keyword">var</span> now = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">　　　　<span class="keyword">var</span> exitTime = now.getTime() + <span class="number">2000</span>;</span><br><span class="line">　　　　<span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">　　　　　　now = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">　　　　　　<span class="keyword">if</span> (now.getTime() &gt;= exitTime) &#123;</span><br><span class="line">　　　　　　　　<span class="built_in">console</span>.log(<span class="string">"twoSecond"</span>);</span><br><span class="line">　　　　　　　　<span class="keyword">return</span>;</span><br><span class="line">　　　　　　&#125;</span><br><span class="line">　　　　&#125;</span><br><span class="line">　　&#125;</span><br><span class="line">　　twoSecond();</span><br><span class="line">　　<span class="function"><span class="keyword">function</span> <span class="title">threeSecond</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">　　　　<span class="keyword">var</span> now = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">　　　　<span class="keyword">var</span> exitTime = now.getTime() + <span class="number">3000</span>;</span><br><span class="line">　　　　<span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">　　　　　　now = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">　　　　　　<span class="keyword">if</span> (now.getTime() &gt;= exitTime) &#123;</span><br><span class="line">　　　　　　　　<span class="built_in">console</span>.log(<span class="string">"threeSecond"</span>);</span><br><span class="line">　　　　　　　　<span class="keyword">return</span>;</span><br><span class="line">　　　　　　&#125;</span><br><span class="line">　　　　&#125;</span><br><span class="line">　　&#125;</span><br><span class="line">　　threeSecond();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Continue..."</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>执行结果：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">oneSecond</span><br><span class="line">twoSecond</span><br><span class="line">threeSecond</span><br><span class="line">Continue...</span><br><span class="line">// 1（7-3-2-1）秒后输出 setTimeout，如果 setTimeout 小于7秒，</span><br><span class="line">// 立即输出，但是顺序不变</span><br><span class="line">setTimeout</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2017/09/07/Redux_React-redux/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -980,194 +1156,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2016/06/04/mvc_mvvm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Crazy Stone">
-      <meta itemprop="description" content="step by step...">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="疯狂的石头">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/06/04/mvc_mvvm/" itemprop="url">
-                  MVC vs MVVM
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2016-06-04 23:12:00" itemprop="dateCreated datePublished" datetime="2016-06-04T23:12:00+08:00">2016-06-04</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-02-28 23:15:45" itemprop="dateModified" datetime="2019-02-28T23:15:45+08:00">2019-02-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/随笔/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>任何一种网站的功能只是前端（front end）或者视图（view）访问相应的模型（model）获取数据的一种方式。任何情况下，总会有模型和视图，真正改变的是模型和视图的连接方式。连接方式主要有两种：Controller 和 ViewModel，每种连接方式都有自己的优缺点。</p>
-<h2 id="MVC-Model-View-Controller"><a href="#MVC-Model-View-Controller" class="headerlink" title="MVC: Model-View-Controller"></a>MVC: Model-View-Controller</h2><p>MVC模式最初生根于服务器端的Web开发，后来渐渐能够胜任客户端Web开发，能够满足其复杂性和丰富性。</p>
-<p>MVC 在服务器端的表现为：</p>
-<ul>
-<li>Model: 模型（用于封装与应用程序的业务逻辑相关的数据以及对数据的处理方法）</li>
-<li>View: 视图（渲染页面）</li>
-<li>Controller: 控制器（M和V之间的连接器，用于控制应用程序的流程，及页面的业务逻辑）</li>
-</ul>
-<p>MVC 的思想就是 Controller 负责将 Model 的数据用 View 显示出来，换句话说就是在Controller里面把Model的数据赋值给View。MVC 设计模式中视图和模型不需要有联系，因此，MVC模式允许开发人员在 Web 应用程序的不同组件上同时工作而不会相互影响。</p>
-<p>但是 MVC 也有一些缺点。其中每个 Model 都有对应的 Controller，当应用程序扩展得更大并演变成具有许多相关模型时，所使用的控制器数量必须同步增长。这与大多数框架带来的新抽象层的自然引入相结合，创建了一个变得非常难以浏览的代码库。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/06/04/mvc_mvvm/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1214,7 +1207,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

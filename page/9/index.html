@@ -112,7 +112,7 @@
 <meta name="keywords" content="iOS,Android,Python,React-Native,Java,PostgreSQL">
 <meta property="og:type" content="website">
 <meta property="og:title" content="疯狂的石头">
-<meta property="og:url" content="https://abackslash.github.io/archives/2017/index.html">
+<meta property="og:url" content="https://abackslash.github.io/page/9/index.html">
 <meta property="og:site_name" content="疯狂的石头">
 <meta property="og:description" content="step by step...">
 <meta property="og:locale" content="zh-CN">
@@ -125,7 +125,7 @@
 
 
 
-  <link rel="canonical" href="https://abackslash.github.io/archives/2017/"/>
+  <link rel="canonical" href="https://abackslash.github.io/page/9/"/>
 
 
 
@@ -135,7 +135,7 @@
   };
 </script>
 
-  <title>归档 | 疯狂的石头</title>
+  <title>疯狂的石头</title>
   
 
 
@@ -182,7 +182,8 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -227,7 +228,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
   </li>
@@ -268,205 +269,200 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
 
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        还行! 目前共计 41 篇日志。 继续努力。
-      </span>
-      
+  
 
-      
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2016/06/04/mvc_mvvm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Crazy Stone">
+      <meta itemprop="description" content="step by step...">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="疯狂的石头">
+    </span>
+
+    
+      <header class="post-header">
 
         
         
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/06/04/mvc_mvvm/" itemprop="url">
+                  MVC vs MVVM
+                </a>
+              
+            
+          </h1>
         
 
-        
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2016-06-04 23:12:00" itemprop="dateCreated datePublished" datetime="2016-06-04T23:12:00+08:00">2016-06-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-28 23:15:45" itemprop="dateModified" datetime="2019-02-28T23:15:45+08:00">2019-02-28</time>
+              
+            
+          </span>
+
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/随笔/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>任何一种网站的功能只是前端（front end）或者视图（view）访问相应的模型（model）获取数据的一种方式。任何情况下，总会有模型和视图，真正改变的是模型和视图的连接方式。连接方式主要有两种：Controller 和 ViewModel，每种连接方式都有自己的优缺点。</p>
+<h2 id="MVC-Model-View-Controller"><a href="#MVC-Model-View-Controller" class="headerlink" title="MVC: Model-View-Controller"></a>MVC: Model-View-Controller</h2><p>MVC模式最初生根于服务器端的Web开发，后来渐渐能够胜任客户端Web开发，能够满足其复杂性和丰富性。</p>
+<p>MVC 在服务器端的表现为：</p>
+<ul>
+<li>Model: 模型（用于封装与应用程序的业务逻辑相关的数据以及对数据的处理方法）</li>
+<li>View: 视图（渲染页面）</li>
+<li>Controller: 控制器（M和V之间的连接器，用于控制应用程序的流程，及页面的业务逻辑）</li>
+</ul>
+<p>MVC 的思想就是 Controller 负责将 Model 的数据用 View 显示出来，换句话说就是在Controller里面把Model的数据赋值给View。MVC 设计模式中视图和模型不需要有联系，因此，MVC模式允许开发人员在 Web 应用程序的不同组件上同时工作而不会相互影响。</p>
+<p>但是 MVC 也有一些缺点。其中每个 Model 都有对应的 Controller，当应用程序扩展得更大并演变成具有许多相关模型时，所使用的控制器数量必须同步增长。这与大多数框架带来的新抽象层的自然引入相结合，创建了一个变得非常难以浏览的代码库。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/04/mvc_mvvm/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
           </div>
+          <!--/noindex-->
         
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/03/JS几种处理异步方法/" itemprop="url">
-              
-                <span itemprop="name">JavaScript 处理异步的几种方法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-03T22:32:00+08:00"
-              content="2017-11-03" >
-          11-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/07/Redux_React-redux/" itemprop="url">
-              
-                <span itemprop="name">Redux & React-redux</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-07T21:52:00+08:00"
-              content="2017-09-07" >
-          09-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/05/19/进程线程协程/" itemprop="url">
-              
-                <span itemprop="name">进程、线程、协程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-05-19T22:08:00+08:00"
-              content="2017-05-19" >
-          05-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/01/09/python_tips/" itemprop="url">
-              
-                <span itemprop="name">Python 笔记</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-01-09T21:44:51+08:00"
-              content="2017-01-09" >
-          01-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </div>
   
   
   
+  </article>
+
+
+    
+  </section>
 
   
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span>
+  </nav>
 
 
 
