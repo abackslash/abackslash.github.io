@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Github：trojan 安装按照官方 Wiki 安装 trojan 创建CA证书先安装所需的工具：1apt install gnutls-bin gnutls-doc 创建 CA 模板文件 ca.tmpl，内容为（cn 与 organization 可以随便写，但是为了避免可能发生的问题，服务器证书的 cn 填 VPS 的 IP 或域名）：">
+<meta name="keywords" content="iOS,Android,Python,React-Native,Java,PostgreSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="科学上网工具 Trojan 的安装与配置">
+<meta property="og:url" content="https://abackslash.github.io/2020/05/25/trojan安装/index.html">
+<meta property="og:site_name" content="疯狂的石头">
+<meta property="og:description" content="Github：trojan 安装按照官方 Wiki 安装 trojan 创建CA证书先安装所需的工具：1apt install gnutls-bin gnutls-doc 创建 CA 模板文件 ca.tmpl，内容为（cn 与 organization 可以随便写，但是为了避免可能发生的问题，服务器证书的 cn 填 VPS 的 IP 或域名）：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-05-25T09:34:56.234Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="科学上网工具 Trojan 的安装与配置">
+<meta name="twitter:description" content="Github：trojan 安装按照官方 Wiki 安装 trojan 创建CA证书先安装所需的工具：1apt install gnutls-bin gnutls-doc 创建 CA 模板文件 ca.tmpl，内容为（cn 与 organization 可以随便写，但是为了避免可能发生的问题，服务器证书的 cn 填 VPS 的 IP 或域名）：">
+
+
+
+
+
+
+  <link rel="canonical" href="https://abackslash.github.io/2020/05/25/trojan安装/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>科学上网工具 Trojan 的安装与配置 | 疯狂的石头</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">疯狂的石头</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://abackslash.github.io/2020/05/25/trojan安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Crazy Stone">
+      <meta itemprop="description" content="step by step...">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="疯狂的石头">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">科学上网工具 Trojan 的安装与配置
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-05-25 17:34:56" itemprop="dateCreated datePublished" datetime="2020-05-25T17:34:56+08:00">2020-05-25</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/随笔/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Github：<a href="https://github.com/trojan-gfw/trojan" target="_blank" rel="noopener">trojan</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>按照官方 <a href="https://github.com/trojan-gfw/trojan/wiki/Binary-&amp;-Package-Distributions" target="_blank" rel="noopener">Wiki</a> 安装 trojan</p>
+<h2 id="创建CA证书"><a href="#创建CA证书" class="headerlink" title="创建CA证书"></a>创建CA证书</h2><h3 id="先安装所需的工具："><a href="#先安装所需的工具：" class="headerlink" title="先安装所需的工具："></a>先安装所需的工具：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install gnutls-bin gnutls-doc</span><br></pre></td></tr></table></figure>
+<p>创建 CA 模板文件 ca.tmpl，内容为（cn 与 organization 可以随便写，但是为了避免可能发生的问题，服务器证书的 cn 填 VPS 的 IP 或域名）：</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cn = <span class="string">"ff"</span></span><br><span class="line">organization = <span class="string">"ff"</span></span><br><span class="line">serial = 1</span><br><span class="line">expiration_days = 3650</span><br><span class="line">ca</span><br><span class="line">signing_key</span><br><span class="line">cert_signing_key</span><br><span class="line">crl_signing_key</span><br></pre></td></tr></table></figure>
+<h3 id="生成-CA-密钥："><a href="#生成-CA-密钥：" class="headerlink" title="生成 CA 密钥："></a>生成 CA 密钥：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certtool --generate-privkey --outfile ca-key.pem</span><br></pre></td></tr></table></figure>
+<h3 id="生成-CA-证书："><a href="#生成-CA-证书：" class="headerlink" title="生成 CA 证书："></a>生成 CA 证书：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certtool --generate-self-signed --load-privkey ca-key.pem --template ca.tmpl --outfile ca-cert.pem</span><br></pre></td></tr></table></figure>
+<h3 id="创建服务器证书模板："><a href="#创建服务器证书模板：" class="headerlink" title="创建服务器证书模板："></a>创建服务器证书模板：</h3><p>创建文件 server.tmpl，内容为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cn = <span class="string">"xxx.xxx.xxx.xxx"</span></span><br><span class="line">organization = <span class="string">"ff"</span></span><br><span class="line">expiration_days = 3650</span><br><span class="line">signing_key</span><br><span class="line">encryption_key</span><br><span class="line">tls_www_server</span><br></pre></td></tr></table></figure>
+<h3 id="生成服务器证书密钥："><a href="#生成服务器证书密钥：" class="headerlink" title="生成服务器证书密钥："></a>生成服务器证书密钥：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certtool --generate-privkey --outfile server-key.pem</span><br></pre></td></tr></table></figure>
+<h3 id="生成服务器证书："><a href="#生成服务器证书：" class="headerlink" title="生成服务器证书："></a>生成服务器证书：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certtool --generate-certificate --load-privkey server-key.pem --load-ca-certificate ca-cert.pem --load-ca-privkey ca-key.pem --template server.tmpl --outfile server-cert.pem</span><br></pre></td></tr></table></figure>
+<h2 id="服务端配置文件："><a href="#服务端配置文件：" class="headerlink" title="服务端配置文件："></a>服务端配置文件：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;run_type&quot;: &quot;server&quot;,</span><br><span class="line">    &quot;local_addr&quot;: &quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;local_port&quot;: 443,</span><br><span class="line">    &quot;remote_addr&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;remote_port&quot;: 80,</span><br><span class="line">    &quot;password&quot;: [</span><br><span class="line">        &quot;Password1&quot;,</span><br><span class="line">        &quot;Password2&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;log_level&quot;: 1,</span><br><span class="line">    &quot;ssl&quot;: &#123;</span><br><span class="line">        &quot;cert&quot;: &quot;/.../server-cert.pem&quot;,</span><br><span class="line">        &quot;key&quot;: &quot;/.../server-key.pem&quot;,</span><br><span class="line">        &quot;key_password&quot;: &quot;&quot;,</span><br><span class="line">        &quot;cipher&quot;: &quot;ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS&quot;,</span><br><span class="line">        &quot;prefer_server_cipher&quot;: true,</span><br><span class="line">        &quot;alpn&quot;: [</span><br><span class="line">            &quot;http/1.1&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;reuse_session&quot;: true,</span><br><span class="line">        &quot;session_timeout&quot;: 300,</span><br><span class="line">        &quot;curves&quot;: &quot;&quot;,</span><br><span class="line">        &quot;sigalgs&quot;: &quot;&quot;,</span><br><span class="line">        &quot;dhparam&quot;: &quot;&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>需要修改的地方：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&quot;password&quot;: [</span><br><span class="line">    &quot;Password1&quot;,</span><br><span class="line">    &quot;Password2&quot;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">&quot;cert&quot;: &quot;/.../server-cert.pem&quot;</span><br><span class="line"></span><br><span class="line">&quot;key&quot;: &quot;/.../server-key.pem&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="客户端配置文件："><a href="#客户端配置文件：" class="headerlink" title="客户端配置文件："></a>客户端配置文件：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;run_type&quot;: &quot;client&quot;,</span><br><span class="line">    &quot;local_addr&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;: 1080,</span><br><span class="line">    &quot;remote_addr&quot;: &quot;你的 VPS 的 IP&quot;,</span><br><span class="line">    &quot;remote_port&quot;: 443,</span><br><span class="line">    &quot;password&quot;: [&quot;Password1&quot;],</span><br><span class="line">    &quot;append_payload&quot;: true,</span><br><span class="line">    &quot;log_level&quot;: 1,</span><br><span class="line">    &quot;ssl&quot;: &#123;</span><br><span class="line">        &quot;verify&quot;: true,</span><br><span class="line">        &quot;verify_hostname&quot;: true,</span><br><span class="line">        &quot;cert&quot;: &quot;ca-cert.pem&quot;,</span><br><span class="line">        &quot;cipher&quot;: &quot;ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES128-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA:AES128-SHA:AES256-SHA:DES-CBC3-SHA&quot;,</span><br><span class="line">        &quot;sni&quot;: &quot;你的 VPS 的 IP&quot;,</span><br><span class="line">        &quot;alpn&quot;: [</span><br><span class="line">            &quot;h2&quot;,</span><br><span class="line">            &quot;http/1.1&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;reuse_session&quot;: true,</span><br><span class="line">        &quot;curves&quot;: &quot;&quot;,</span><br><span class="line">        &quot;sigalgs&quot;: &quot;&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>需要修改的地方：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;remote_addr&quot;: &quot;你的 VPS 的 IP&quot;</span><br><span class="line"></span><br><span class="line">&quot;cert&quot;: &quot;ca-cert.pem&quot; 设置为自己生成的证书</span><br><span class="line"></span><br><span class="line">&quot;sni&quot;: &quot;你的 VPS 的 IP&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="运行："><a href="#运行：" class="headerlink" title="运行："></a>运行：</h2><p>通过 <code>brew info trojan</code> 可以查看</p>
+<p>参考：<a href="http://www.oixxu.com/anti-gfw-tool-trojan-install-configuration/" target="_blank" rel="noopener">1</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/09/霍夫曼编码/" rel="next" title="霍夫曼编码">
+                <i class="fa fa-chevron-left"></i> 霍夫曼编码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Crazy Stone" />
+            
+              <p class="site-author-name" itemprop="name">Crazy Stone</p>
+              <p class="site-description motion-element" itemprop="description">step by step...</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">42</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:dll1885@icloud.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/abackslash" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建CA证书"><span class="nav-number">2.</span> <span class="nav-text">创建CA证书</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先安装所需的工具："><span class="nav-number">2.1.</span> <span class="nav-text">先安装所需的工具：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成-CA-密钥："><span class="nav-number">2.2.</span> <span class="nav-text">生成 CA 密钥：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成-CA-证书："><span class="nav-number">2.3.</span> <span class="nav-text">生成 CA 证书：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建服务器证书模板："><span class="nav-number">2.4.</span> <span class="nav-text">创建服务器证书模板：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成服务器证书密钥："><span class="nav-number">2.5.</span> <span class="nav-text">生成服务器证书密钥：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成服务器证书："><span class="nav-number">2.6.</span> <span class="nav-text">生成服务器证书：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务端配置文件："><span class="nav-number">3.</span> <span class="nav-text">服务端配置文件：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端配置文件："><span class="nav-number">4.</span> <span class="nav-text">客户端配置文件：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行："><span class="nav-number">5.</span> <span class="nav-text">运行：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Crazy Stone</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
